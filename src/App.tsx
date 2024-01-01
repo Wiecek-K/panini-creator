@@ -3,10 +3,15 @@ import { SplashScreen } from './components/SplashScreen/SplashScreen'
 
 function App() {
   return (
-    <div>
-      <h1>Panini Creator</h1>
-      <SplashScreen />
-    </div>
+    <>
+      <SplashScreen
+        header="Panini Creator"
+        btnText="BEGIN"
+        btnFnc={() => {
+          null
+        }}
+      />
+    </>
   )
 }
 

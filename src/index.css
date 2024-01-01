@@ -2,7 +2,7 @@
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  
+
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
 
@@ -13,10 +13,17 @@
   -webkit-text-size-adjust: 100%;
 }
 
-body {
+* {
+  box-sizing: border-box;
   margin: 0;
-  display: flex;
-  place-items: center;
+}
+
+body {
+  font-family: 'Instrument Serif', serif;
+  color: #242424;
+  margin: 0 auto;
+  padding: 20px;
+
   min-width: 320px;
   min-height: 100vh;
 }
