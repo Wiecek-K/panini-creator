@@ -1,13 +1,122 @@
-.button {
+.ringLeft,
+.ringHalfLeft,
+.ringHalfRight,
+.ringRight,
+.ringTop,
+.ringBottom,
+.ringCenter {
+  border: black 0.5px solid;
+  background-color: transparent;
+  border-radius: 50%;
+}
+
+.ringLeft {
+  height: 120%;
+  aspect-ratio: 1 / 1;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translate(-70%, -50%);
+}
+
+.ringHalfLeft {
+  height: 120%;
+  aspect-ratio: 1 / 1;
+  position: absolute;
+  transform: translate(-20%, -50%);
+  left: 0;
+  top: 50%;
+}
+
+.ringHalfRight {
+  height: 120%;
+  aspect-ratio: 1 / 1;
+  position: absolute;
+  transform: translate(20%, -50%);
+  right: 0;
+  top: 50%;
+}
+
+.ringRight {
+  height: 120%;
+  aspect-ratio: 1 / 1;
+  position: absolute;
+  transform: translate(70%, -50%);
+  right: 0;
+  top: 50%;
+}
+
+.ringTop {
+  height: 62%;
+  aspect-ratio: 1 / 1;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -38%);
+}
+
+.ringBottom {
+  height: 62%;
+  aspect-ratio: 1 / 1;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 38%);
+}
+
+.ringCenter {
   display: flex;
-  width: 40px;
-  height: 40px;
-  flex-direction: row;
   justify-content: center;
   align-items: center;
+  height: 120%;
+  aspect-ratio: 1 / 1;
+  background-color: transparent;
+  overflow: hidden;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.splashScreenText {
+  display: inline-block;
+  padding-left: 20px;
+  padding-right: 20px;
+  background-color: whitesmoke;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.mainBar {
+  width: 100%;
+  border: 1px solid black;
+  border-left: none;
+  border-right: none;
+}
+
+.splashScreenText h1 {
+  font-size: 46px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin: 0;
+}
+
+.splashScreenText button {
+  font-family: 'Oxygen Mono', monospace;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  padding: 20px 14px;
   border: none;
-  background: #98a3cf;
-  box-shadow: 0px 20px 34px rgba(152, 163, 207, 0.3);
-  border-radius: 50%;
-  cursor: pointer;
+  background-color: whitesmoke;
+}
+
+@container root (aspect-ratio < 1 / 1) {
+  .ringCenter {
+    min-width: 120%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+  }
 }
