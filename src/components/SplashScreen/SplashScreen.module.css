@@ -4,7 +4,8 @@
 .ringRight,
 .ringTop,
 .ringBottom,
-.ringCenter {
+.ringCenterStatic,
+.ringCenterAnimated {
   border: black 0.5px solid;
   background-color: transparent;
   border-radius: 50%;
@@ -18,6 +19,18 @@
   top: 50%;
   transform: translate(-70%, -50%);
 }
+.moveRingLeft {
+  animation: animationRingLeft 3000ms ease-in forwards;
+}
+@keyframes animationRingLeft {
+  from {
+    transform: translate(-70%, -50%);
+  }
+
+  to {
+    transform: translate(-100%, -50%);
+  }
+}
 
 .ringHalfLeft {
   height: 120%;
@@ -26,6 +39,18 @@
   transform: translate(-20%, -50%);
   left: 0;
   top: 50%;
+}
+.moveRingHalfLeft {
+  animation: animationRingHalfLeft 3000ms ease-in forwards;
+}
+@keyframes animationRingHalfLeft {
+  from {
+    transform: translate(-20%, -50%);
+  }
+
+  to {
+    transform: translate(-100%, -50%);
+  }
 }
 
 .ringHalfRight {
@@ -36,6 +61,18 @@
   right: 0;
   top: 50%;
 }
+.moveRingHalfRight {
+  animation: animationRingHalfRight 3000ms ease-in forwards;
+}
+@keyframes animationRingHalfRight {
+  from {
+    transform: translate(20%, -50%);
+  }
+
+  to {
+    transform: translate(100%, -50%);
+  }
+}
 
 .ringRight {
   height: 120%;
@@ -45,6 +82,17 @@
   right: 0;
   top: 50%;
 }
+.moveRingRight {
+  animation: animationRingRight 3000ms ease-in forwards;
+}
+@keyframes animationRingRight {
+  from {
+    transform: translate(70%, -50%);
+  }
+  to {
+    transform: translate(100%, -50%);
+  }
+}
 
 .ringTop {
   height: 62%;
@@ -52,7 +100,18 @@
   position: absolute;
   top: 0;
   left: 50%;
-  transform: translate(-50%, -38%);
+  transform: translate(-50%, -30%);
+}
+.moveRingTop {
+  animation: animationRingTop 3000ms ease-in forwards;
+}
+@keyframes animationRingTop {
+  from {
+    transform: translate(-50%, -30%) scale(1);
+  }
+  to {
+    transform: translate(-50%, -100%) scale(0.8);
+  }
 }
 
 .ringBottom {
@@ -61,10 +120,21 @@
   position: absolute;
   bottom: 0;
   left: 50%;
-  transform: translate(-50%, 38%);
+  transform: translate(-50%, 30%);
+}
+.moveRingBottom {
+  animation: animationRingBottom 3000ms ease-in forwards;
+}
+@keyframes animationRingBottom {
+  from {
+    transform: translate(-50%, 30%) scale(1);
+  }
+  to {
+    transform: translate(-50%, 100%) scale(0.8);
+  }
 }
 
-.ringCenter {
+.ringCenterStatic {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -77,18 +147,61 @@
   top: 50%;
   transform: translate(-50%, -50%);
 }
+.ringCenterStatic.isClosing {
+  border: none;
+  animation: animationMainBar 3000ms ease-in forwards;
+}
+@keyframes animationMainBar {
+  from {
+    transform: translate(-50%, -50%);
+  }
+  to {
+    transform: translate(-100%, -50%);
+  }
+}
+
+.ringCenterAnimated {
+  border-color: blueviolet;
+  display: none;
+  height: 120%;
+  aspect-ratio: 1 / 1;
+  background-color: transparent;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.ringCenterAnimated.isClosing {
+  display: block;
+  border-width: 0.5px;
+  animation: animationRingCenter 3000ms ease-in forwards;
+}
+
+@keyframes animationRingCenter {
+  from {
+    transform: scale(1) translate(-50%, -50%);
+  }
+  to {
+    transform: scale(2) translate(-25%, -25%);
+  }
+}
 
 .splashScreenText {
   display: inline-block;
   padding-left: 20px;
   padding-right: 20px;
-  background-color: whitesmoke;
+
   padding-top: 50px;
   padding-bottom: 50px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .mainBar {
   width: 100%;
+  height: 210px;
   border: 1px solid black;
   border-left: none;
   border-right: none;
@@ -102,7 +215,7 @@
   margin: 0;
 }
 
-.splashScreenText button {
+.button {
   font-family: 'Oxygen Mono', monospace;
   font-size: 12px;
   font-style: normal;
@@ -110,6 +223,10 @@
   line-height: normal;
   padding: 20px 14px;
   border: none;
+  background-color: transparent;
+}
+
+.textBackground {
   background-color: whitesmoke;
 }
 
