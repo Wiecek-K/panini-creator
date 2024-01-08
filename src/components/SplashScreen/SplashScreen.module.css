@@ -152,10 +152,8 @@
   animation: animationMainBar 3000ms ease-in forwards;
 }
 @keyframes animationMainBar {
-  from {
-    transform: translate(-50%, -50%);
-  }
   to {
+    left: 0;
     transform: translate(-100%, -50%);
   }
 }
@@ -205,8 +203,12 @@
   border: 1px solid black;
   border-left: none;
   border-right: none;
+  position: absolute;
 }
 
+.mainBar.isClosing {
+  border-top: none;
+}
 .splashScreenText h1 {
   font-size: 46px;
   font-style: normal;
@@ -231,7 +233,8 @@
 }
 
 @container root (aspect-ratio < 1 / 1) {
-  .ringCenter {
+  .ringCenterAnimated,
+  .ringCenterStatic {
     min-width: 120%;
     height: auto;
     aspect-ratio: 1 / 1;

@@ -48,7 +48,7 @@ export const SplashScreen = ({
         }`}
       >
         <div
-          className={`${styles.mainBar} ${isClosing ? styles.moveMainBar : ''}`}
+          className={`${styles.mainBar} ${isClosing ? styles.isClosing : ''}`}
         />
       </div>
 
