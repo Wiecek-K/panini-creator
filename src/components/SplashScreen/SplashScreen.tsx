@@ -1,5 +1,5 @@
 import styles from './SplashScreen.module.css'
-
+import { CSSTransition } from 'react-transition-group'
 interface SplashScreenProps {
   header: string
   btnText: string
@@ -14,60 +14,27 @@ export const SplashScreen = ({
   btnFnc,
 }: SplashScreenProps) => {
   return (
-    <>
-      <div
-        className={`${styles.ringLeft} ${isClosing ? styles.moveRingLeft : ''}`}
-      />
-      <div
-        className={`${styles.ringHalfLeft} ${
-          isClosing ? styles.moveRingHalfLeft : ''
-        }`}
-      />
-      <div
-        className={`${styles.ringHalfRight} ${
-          isClosing ? styles.moveRingHalfRight : ''
-        }`}
-      />
-      <div
-        className={`${styles.ringRight} ${
-          isClosing ? styles.moveRingRight : ''
-        }`}
-      />
-      <div
-        className={`${styles.ringTop} ${isClosing ? styles.moveRingTop : ''}`}
-      />
-      <div
-        className={`${styles.ringBottom} ${
-          isClosing ? styles.moveRingBottom : ''
-        }`}
-      />
+    <CSSTransition in={isClosing} classNames={{ ...styles }} timeout={30000}>
+      <div className={styles.splashScreen}>
+        <div className={styles.ringLeft} />
+        <div className={styles.ringHalfLeft} />
+        <div className={styles.ringHalfRight} />
+        <div className={styles.ringRight} />
+        <div className={styles.ringTop} />
+        <div className={styles.ringBottom} />
 
-      <div
-        className={`${styles.ringCenterStatic} ${
-          isClosing ? styles.isClosing : ''
-        }`}
-      >
-        <div
-          className={`${styles.mainBar} ${isClosing ? styles.isClosing : ''}`}
-        />
-      </div>
+        <div className={styles.ringCenterStatic}>
+          <div className={styles.mainBar} />
+        </div>
+        <div className={styles.ringCenterAnimated} />
 
-      <div
-        className={`${styles.ringCenterAnimated} ${
-          isClosing ? styles.isClosing : ''
-        }`}
-      ></div>
-      <div className={styles.splashScreenText}>
-        <h1 className={isClosing ? '' : styles.textBackground}>{header}</h1>
-        <button
-          className={`${isClosing ? '' : styles.textBackground} ${
-            styles.button
-          }`}
-          onClick={btnFnc}
-        >
-          {btnText}
-        </button>
+        <div className={styles.splashScreenText}>
+          <h1 className={styles.splashScreenHeader}>{header}</h1>
+          <button className={styles.splashScreenButton} onClick={btnFnc}>
+            {btnText}
+          </button>
+        </div>
       </div>
-    </>
+    </CSSTransition>
   )
 }

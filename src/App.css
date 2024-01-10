@@ -4,7 +4,7 @@
   height: 100vh;
   max-width: 1440px;
   max-height: 1024px;
-  background-color: whitesmoke;
+  background-color: var(--background-color);
   text-align: center;
   position: relative;
   container-type: size;
