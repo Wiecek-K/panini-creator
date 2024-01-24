@@ -1,4 +1,4 @@
-.test {
+.formContainer {
   margin: auto;
   width: 800px;
   height: 250vh;
@@ -7,6 +7,7 @@
 
   visibility: hidden;
   display: none;
+  transition: opacity 3s;
 }
 .open {
   opacity: 1;
