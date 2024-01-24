@@ -14,7 +14,7 @@ export const SplashScreen = ({
   btnFnc,
 }: SplashScreenProps) => {
   return (
-    <CSSTransition in={isClosing} classNames={{ ...styles }} timeout={30000}>
+    <CSSTransition in={isClosing} classNames={{ ...styles }} timeout={3000}>
       <div className={styles.splashScreen}>
         <div className={styles.ringLeft} />
         <div className={styles.ringHalfLeft} />

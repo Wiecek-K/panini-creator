@@ -1,10 +1,12 @@
 import './App.css'
 import { useState } from 'react'
 import { SplashScreen } from './components/SplashScreen/SplashScreen'
+import { Form } from './components/Form/Form'
+import { CSSTransition } from 'react-transition-group'
 
 function App() {
-  const [appState, setAppState] = useState<'start' | 'form' | 'end'>('start')
   const [isClosing, setIsClosing] = useState(false)
+  const [isEnd, setIsEnd] = useState(false)
 
   const handleOpenForm = () => {
     // setAppState('form')
@@ -13,18 +15,21 @@ function App() {
 
   return (
     <>
-      {appState === 'start' ? (
-        <SplashScreen
-          header="Panini Creator"
-          btnText="BEGIN"
-          btnFnc={() => {
-            handleOpenForm()
-          }}
-          isClosing={isClosing}
-        />
-      ) : null}
-      {appState === 'form' ? 'FORM' : null}
-      {appState === 'end' ? 'END' : null}
+      {!isEnd && (
+        <>
+          <SplashScreen
+            header="Panini Creator"
+            btnText="BEGIN"
+            btnFnc={() => {
+              handleOpenForm()
+            }}
+            isClosing={isClosing}
+          />
+          <Form isOpened={isClosing} />
+        </>
+      )}
+
+      {isEnd && null}
     </>
   )
 }

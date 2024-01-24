@@ -1,0 +1,16 @@
+.test {
+  margin: auto;
+  width: 800px;
+  height: 250vh;
+  opacity: 0;
+  transition: opacity 5s;
+
+  visibility: hidden;
+  display: none;
+}
+.open {
+  opacity: 1;
+  visibility: visible;
+  background-color: blue;
+  display: block;
+}
