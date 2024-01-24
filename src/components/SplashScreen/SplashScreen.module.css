@@ -1,10 +1,32 @@
+.splashScreen {
+  opacity: 1;
+  transition: opacity 3000ms ease-in;
+  height: 100vh;
+  width: 100vw;
+  max-width: 1440px;
+  max-height: 1024px;
+  position: relative;
+  background-color: var(--background-color);
+  overflow: hidden;
+  position: absolute;
+}
+
+.splashScreen.enterActive {
+  opacity: 0;
+}
+.splashScreen.enterDone {
+  opacity: 0;
+  display: none;
+}
+
 .ringLeft,
 .ringHalfLeft,
 .ringHalfRight,
 .ringRight,
 .ringTop,
 .ringBottom,
-.ringCenter {
+.ringCenterStatic,
+.ringCenterAnimated {
   border: black 0.5px solid;
   background-color: transparent;
   border-radius: 50%;
@@ -18,6 +40,14 @@
   top: 50%;
   transform: translate(-70%, -50%);
 }
+.enterActive .ringLeft {
+  animation: animationRingLeft 3000ms ease-in forwards;
+}
+@keyframes animationRingLeft {
+  to {
+    transform: translate(-100%, -50%);
+  }
+}
 
 .ringHalfLeft {
   height: 120%;
@@ -26,6 +56,14 @@
   transform: translate(-20%, -50%);
   left: 0;
   top: 50%;
+}
+.enterActive .ringHalfLeft {
+  animation: animationRingHalfLeft 3000ms ease-in forwards;
+}
+@keyframes animationRingHalfLeft {
+  to {
+    transform: translate(-100%, -50%);
+  }
 }
 
 .ringHalfRight {
@@ -36,6 +74,14 @@
   right: 0;
   top: 50%;
 }
+.enterActive .ringHalfRight {
+  animation: animationRingHalfRight 3000ms ease-in forwards;
+}
+@keyframes animationRingHalfRight {
+  to {
+    transform: translate(100%, -50%);
+  }
+}
 
 .ringRight {
   height: 120%;
@@ -45,6 +91,14 @@
   right: 0;
   top: 50%;
 }
+.enterActive .ringRight {
+  animation: animationRingRight 3000ms ease-in forwards;
+}
+@keyframes animationRingRight {
+  to {
+    transform: translate(100%, -50%);
+  }
+}
 
 .ringTop {
   height: 62%;
@@ -52,7 +106,15 @@
   position: absolute;
   top: 0;
   left: 50%;
-  transform: translate(-50%, -38%);
+  transform: translate(-50%, -30%);
+}
+.enterActive .ringTop {
+  animation: animationRingTop 3000ms ease-in forwards;
+}
+@keyframes animationRingTop {
+  to {
+    transform: translate(-50%, -100%) scale(0.8);
+  }
 }
 
 .ringBottom {
@@ -61,10 +123,18 @@
   position: absolute;
   bottom: 0;
   left: 50%;
-  transform: translate(-50%, 38%);
+  transform: translate(-50%, 30%);
+}
+.enterActive .ringBottom {
+  animation: animationRingBottom 3000ms ease-in forwards;
+}
+@keyframes animationRingBottom {
+  to {
+    transform: translate(-50%, 100%) scale(0.8);
+  }
 }
 
-.ringCenter {
+.ringCenterStatic {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -77,32 +147,75 @@
   top: 50%;
   transform: translate(-50%, -50%);
 }
+.enterActive .ringCenterStatic {
+  border: none;
+  animation: animationMainBar 3000ms ease-in forwards;
+}
+@keyframes animationMainBar {
+  to {
+    left: 0;
+    transform: translate(-100%, -50%);
+  }
+}
+
+.ringCenterAnimated {
+  display: none;
+  height: 120%;
+  aspect-ratio: 1 / 1;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.enterActive .ringCenterAnimated {
+  display: block;
+  animation: animationRingCenter 3000ms ease-in forwards;
+}
+
+@keyframes animationRingCenter {
+  to {
+    transform: scale(2) translate(-25%, -25%);
+    border-width: 0.25px;
+  }
+}
 
 .splashScreenText {
   display: inline-block;
-  padding-left: 20px;
-  padding-right: 20px;
-  background-color: whitesmoke;
-  padding-top: 50px;
-  padding-bottom: 50px;
+  padding: 50px 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .mainBar {
   width: 100%;
+  height: 210px;
   border: 1px solid black;
   border-left: none;
   border-right: none;
+  position: absolute;
+  transition: border 0.2s;
+}
+.enterActive .mainBar {
+  border-top-color: transparent;
 }
 
-.splashScreenText h1 {
+.splashScreenHeader {
   font-size: 46px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
   margin: 0;
+  background-color: var(--background-color);
+  transition: background-color 0.3s;
+}
+.enterActive .splashScreenHeader {
+  background-color: transparent;
 }
 
-.splashScreenText button {
+.splashScreenButton {
   font-family: 'Oxygen Mono', monospace;
   font-size: 12px;
   font-style: normal;
@@ -110,11 +223,16 @@
   line-height: normal;
   padding: 20px 14px;
   border: none;
-  background-color: whitesmoke;
+  background-color: var(--background-color);
+  transition: background-color 0.3s;
+}
+.enterActive .splashScreenButton {
+  background-color: transparent;
 }
 
-@container root (aspect-ratio < 1 / 1) {
-  .ringCenter {
+@media (max-aspect-ratio: 1/1) {
+  .ringCenterAnimated,
+  .ringCenterStatic {
     min-width: 120%;
     height: auto;
     aspect-ratio: 1 / 1;

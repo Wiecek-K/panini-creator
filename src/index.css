@@ -1,4 +1,6 @@
 :root {
+  --background-color: #cfefcb;
+
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -19,11 +21,12 @@
 }
 
 body {
+  scroll-behavior: smooth;
   font-family: 'Instrument Serif', serif;
   color: #242424;
-  margin: 0 auto;
-  padding: 20px;
-
   min-width: 320px;
   min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
