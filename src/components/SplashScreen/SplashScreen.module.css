@@ -5,10 +5,11 @@
   width: 100vw;
   max-width: 1440px;
   max-height: 1024px;
-  position: relative;
   background-color: var(--background-color);
   overflow: hidden;
-  position: absolute;
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .splashScreen.enterActive {
