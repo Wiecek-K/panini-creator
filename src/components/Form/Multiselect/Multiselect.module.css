@@ -1,0 +1,17 @@
+.input {
+  width: 0;
+  height: 0;
+}
+.label {
+  padding: 10px 20px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--Gray, #fbfbfb);
+  border: 0.5px solid transparent;
+}
+
+.input:checked + .label {
+  border-color: var(--Black, #000);
+  background: var(--White, #fff);
+}

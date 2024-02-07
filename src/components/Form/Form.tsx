@@ -1,20 +1,30 @@
+import React, { ReactNode } from 'react'
+import { useForm, SubmitHandler, FieldValues } from 'react-hook-form'
 import styles from './Form.module.css'
-
 interface FormProps {
-  isOpened?: boolean
-  endFormFnc: () => void
+  defaultValues?: FieldValues
+  children: ReactNode
+  onSubmit: SubmitHandler<FieldValues>
 }
+export const Form = ({ defaultValues, children, onSubmit }: FormProps) => {
+  const methods = useForm({ defaultValues })
+  const { handleSubmit } = methods
 
-export const Form = ({ isOpened, endFormFnc }: FormProps) => {
   return (
-    <div className={`${styles.formContainer} ${isOpened ? styles.open : ''}`}>
-      <div className={styles.formHeaderBar}>
-        <h3>Panini Creator</h3>
-        <button> Randomize Panini</button>
-      </div>
-      <div className={styles.formCard}></div>
-      <div className={styles.formCard}></div>
-      <div className={styles.formCard}></div>
-    </div>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      {React.Children.map(children, (child) => {
+        if (React.isValidElement(child) && child.props.name) {
+          return React.createElement(child.type, {
+            ...{
+              ...child.props,
+              register: methods.register,
+              key: child.props.name,
+            },
+          })
+        } else {
+          return child
+        }
+      })}
+    </form>
   )
 }

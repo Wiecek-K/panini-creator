@@ -1,7 +1,7 @@
 import './App.css'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { SplashScreen } from './components/SplashScreen/SplashScreen'
-import { Form } from './components/Form/Form'
+import { PaniniForm } from './components/PaniniForm/PaniniForm'
 
 function App() {
   const [isAppBegan, setIsAppBegan] = useState(false)
@@ -26,7 +26,7 @@ function App() {
             }}
             isClosing={isAppBegan}
           />
-          <Form isOpened={isAppBegan} endFormFnc={handleEndForm} />
+          <PaniniForm isOpened={isAppBegan} endFormFnc={handleEndForm} />
         </>
       )}
 

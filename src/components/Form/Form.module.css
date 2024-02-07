@@ -1,6 +1,6 @@
 .formContainer {
   margin: auto;
-  max-width: 630px;
+  width: 630px;
   height: 1800px;
   opacity: 0;
   visibility: hidden;
@@ -18,4 +18,12 @@
     rgba(253, 187, 45, 1) 100%
   );
   display: block;
+}
+
+.formCard {
+  margin-bottom: 100px;
+}
+
+.slider {
+  width: 200px;
 }
