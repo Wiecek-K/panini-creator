@@ -1,21 +1,16 @@
 import { InputHTMLAttributes } from 'react'
-import { UseFormRegister, FieldValues } from 'react-hook-form'
+import { useFormContext } from 'react-hook-form'
 
 import { capitalizeFirstLetter } from '../../../utils/capitalizeFirstLetter'
 import styles from './Multiselect.module.css'
 
 interface MultiselectProps extends InputHTMLAttributes<HTMLInputElement> {
-  register?: UseFormRegister<FieldValues>
   groupName: string
 }
 
-export const Multiselect = ({
-  register,
-  groupName,
-  name,
-  ...rest
-}: MultiselectProps) => {
-  return name && register ? (
+export const Multiselect = ({ groupName, name, ...rest }: MultiselectProps) => {
+  const { register } = useFormContext()
+  return name ? (
     <>
       <input
         className={styles.input}
