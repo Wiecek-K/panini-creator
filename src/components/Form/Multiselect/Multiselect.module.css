@@ -1,6 +1,13 @@
+.multiselectField {
+  position: relative;
+}
+
 .input {
   width: 0;
   height: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
 }
 .label {
   padding: 10px 20px;

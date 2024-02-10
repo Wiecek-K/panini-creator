@@ -2,6 +2,9 @@ import { FieldValues, useForm, FormProvider } from 'react-hook-form'
 
 import { Multiselect } from '../Form/Multiselect/Multiselect'
 import { CarouselSwitch } from '../Form/Carousel/CarouselSwitch'
+import { FormCard } from '../Form/FormCard/FormCard'
+import { FormField } from '../Form/FormField/FormField'
+
 import styles from './PaniniForm.module.css'
 
 import { vegetableVariant } from '../../data/vegetable'
@@ -42,17 +45,34 @@ export const PaniniForm = ({ isOpened }: PaniniFormProps) => {
     <div className={`${styles.formContainer} ${isOpened ? styles.open : ''}`}>
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(onSubmit)}>
-          {vegetableVariant.map((vegetable) => (
-            <Multiselect
-              groupName="vegetableVariant"
-              name={vegetable}
-              key={`vegetableVariant.${vegetable}`}
-            />
-          ))}
-          <CarouselSwitch name="bread" icons={true} options={breadVariants} />
-          <input placeholder="eg. Club Panini" {...register(`paniniName`)} />
-          <button type="submit">PLACE ORDER</button>
-          <button type="reset">START AGAIN</button>
+          <FormCard header="CONFIGURE BASE">
+            <FormField>
+              <h3 className={styles.fieldName}>Bread</h3>
+              <CarouselSwitch
+                name="bread"
+                icons={true}
+                options={breadVariants}
+              />
+            </FormField>
+            <FormField>
+              <h3 className={styles.fieldName}>Cheese</h3>
+              <div className={styles.multiselectContainer}>
+                {vegetableVariant.map((vegetable) => (
+                  <Multiselect
+                    groupName="vegetableVariant"
+                    name={vegetable}
+                    key={`vegetableVariant.${vegetable}`}
+                  />
+                ))}
+              </div>
+            </FormField>
+          </FormCard>
+          <FormCard header="CONFIGURE EXTRAS"></FormCard>
+          <FormCard header="FINALIZE ORDER">
+            <input placeholder="eg. Club Panini" {...register(`paniniName`)} />
+            <button type="submit">PLACE ORDER</button>
+            <button type="reset">START AGAIN</button>
+          </FormCard>
           {/* <Multiselect groupName="vegetables" name="onion" />
         <Multiselect groupName="vegetables" name="tomato" /> */}
           {/* <Select name="gender" options={['female', 'male', 'other']} /> */}

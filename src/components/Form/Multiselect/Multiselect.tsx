@@ -11,7 +11,7 @@ interface MultiselectProps extends InputHTMLAttributes<HTMLInputElement> {
 export const Multiselect = ({ groupName, name, ...rest }: MultiselectProps) => {
   const { register } = useFormContext()
   return name ? (
-    <>
+    <div className={styles.multiselectField}>
       <input
         className={styles.input}
         type="checkbox"
@@ -22,6 +22,6 @@ export const Multiselect = ({ groupName, name, ...rest }: MultiselectProps) => {
       <label className={styles.label} htmlFor={name}>
         {capitalizeFirstLetter(name)}
       </label>
-    </>
+    </div>
   ) : null
 }

@@ -1,0 +1,21 @@
+.slick-prev {
+  left: -10px;
+}
+
+.slick-next {
+  right: 0;
+}
+
+.slick-prev:before {
+  /* background-color: black; */
+  color: black;
+  content: url('icons/slick-prev.svg');
+}
+.slick-prev,
+.slick-next {
+  top: calc(50% - 3px);
+}
+
+.slick-next:before {
+  content: url('/icons/slick-next.svg');
+}

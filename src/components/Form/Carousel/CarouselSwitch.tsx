@@ -1,6 +1,8 @@
-import styles from './CarouselSwitch.module.css'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
+import './slick.css'
+
+import styles from './CarouselSwitch.module.css'
 import Slider from 'react-slick'
 import { useFormContext } from 'react-hook-form'
 import { capitalizeFirstLetter } from '../../../utils/capitalizeFirstLetter'
@@ -37,10 +39,12 @@ export const CarouselSwitch = ({
       <Slider {...settings}>
         {options.map((value, index) => (
           <div key={index}>
-            {icons && (
-              <img src={`/icons/Icon=${capitalizeFirstLetter(value)}.svg`} />
-            )}
-            {value}
+            <div className={styles.sliderOption}>
+              {icons && (
+                <img src={`/icons/Icon=${capitalizeFirstLetter(value)}.svg`} className={styles.icon}/>
+              )}
+              {value}
+            </div>
           </div>
         ))}
       </Slider>
