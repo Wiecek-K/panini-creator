@@ -21,6 +21,7 @@
   width: 15px;
   background-color: white;
   border: 1px solid black;
+  border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -32,6 +33,7 @@
   display: none;
   width: 7px;
   height: 7px;
+  border-radius: 50%;
   background-color: black;
 }
 

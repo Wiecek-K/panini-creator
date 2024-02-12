@@ -4,11 +4,14 @@ import { Multiselect } from '../Form/Multiselect/Multiselect'
 import { CarouselSwitch } from '../Form/Carousel/CarouselSwitch'
 import { FormCard } from '../Form/FormCard/FormCard'
 import { FormField } from '../Form/FormField/FormField'
-
+import { Checkbox } from '../Form/Checkbox/Checkbox'
+import { Radio } from '../Form/Radio/Radio'
 import styles from './PaniniForm.module.css'
 
 import { vegetableVariant } from '../../data/vegetable'
 import { breadVariants } from '../../data/bread'
+import { spreadVariant } from '../../data/spread'
+import { servingVariant } from '../../data/serving'
 interface PaniniFormProps {
   isOpened?: boolean
   endFormFnc: () => void
@@ -67,7 +70,24 @@ export const PaniniForm = ({ isOpened }: PaniniFormProps) => {
               </div>
             </FormField>
           </FormCard>
-          <FormCard header="CONFIGURE EXTRAS"></FormCard>
+          <FormCard header="CONFIGURE EXTRAS">
+            <FormField>
+              <h3 className={styles.fieldName}>Spreads</h3>
+              <div className={styles.spreadsContainer}>
+                {spreadVariant.map((spread) => (
+                  <Checkbox
+                    labelText={spread}
+                    name={`spreads.${spread}`}
+                    key={`spreads.${spread}`}
+                  />
+                ))}
+              </div>
+            </FormField>
+            <FormField>
+              <h3 className={styles.fieldName}>Serving</h3>
+              <Radio name={'serving'} options={servingVariant}></Radio>
+            </FormField>
+          </FormCard>
           <FormCard header="FINALIZE ORDER">
             <input placeholder="eg. Club Panini" {...register(`paniniName`)} />
             <button type="submit">PLACE ORDER</button>

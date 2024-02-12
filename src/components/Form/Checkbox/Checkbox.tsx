@@ -11,16 +11,18 @@ interface CheckboxProps extends InputHTMLAttributes<HTMLInputElement> {
 export const Checkbox = ({ name, labelText, ...rest }: CheckboxProps) => {
   const { register } = useFormContext()
   return (
-    <>
+    <div className={styles.container}>
       <input
         className={styles.input}
         type="checkbox"
+        id={name}
         {...register(name)}
         {...rest}
       />
       <label className={styles.label} htmlFor={name}>
-        {labelText}
+        <span>{labelText}</span>
+        <span className={styles.checkmark}></span>
       </label>
-    </>
+    </div>
   )
 }
