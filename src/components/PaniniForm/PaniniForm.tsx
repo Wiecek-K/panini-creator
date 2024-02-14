@@ -69,6 +69,9 @@ export const PaniniForm = ({ isOpened }: PaniniFormProps) => {
                 ))}
               </div>
             </FormField>
+            <FormField>
+              <h3 className={styles.fieldName}>Meat</h3>
+            </FormField>
           </FormCard>
           <FormCard header="CONFIGURE EXTRAS">
             <FormField>
