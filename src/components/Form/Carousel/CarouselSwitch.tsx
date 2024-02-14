@@ -1,10 +1,13 @@
+import { useFormContext } from 'react-hook-form'
+import { useEffect } from 'react'
+
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import './slick.css'
-
 import styles from './CarouselSwitch.module.css'
+
 import Slider from 'react-slick'
-import { useFormContext } from 'react-hook-form'
+
 import { capitalizeFirstLetter } from '../../../utils/capitalizeFirstLetter'
 
 interface CarouselSwitchProps {
@@ -19,6 +22,9 @@ export const CarouselSwitch = ({
   icons,
 }: CarouselSwitchProps) => {
   const { register, setValue } = useFormContext()
+  useEffect(() => {
+    setValue(name, options[0])
+  }, [name, options, setValue])
 
   const settings = {
     arrows: true,
@@ -35,13 +41,16 @@ export const CarouselSwitch = ({
 
   return (
     <>
-      <input type="hidden" defaultValue={options[0]} {...register(name)} />
+      <input type="hidden" {...register(name)} />
       <Slider {...settings}>
         {options.map((value, index) => (
           <div key={index}>
             <div className={styles.sliderOption}>
               {icons && (
-                <img src={`/icons/Icon=${capitalizeFirstLetter(value)}.svg`} className={styles.icon}/>
+                <img
+                  src={`/icons/Icon=${capitalizeFirstLetter(value)}.svg`}
+                  className={styles.icon}
+                />
               )}
               {value}
             </div>

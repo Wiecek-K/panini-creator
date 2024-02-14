@@ -12,6 +12,7 @@ import { vegetableVariant } from '../../data/vegetable'
 import { breadVariants } from '../../data/bread'
 import { spreadVariant } from '../../data/spread'
 import { servingVariant } from '../../data/serving'
+import { FieldArray } from '../Form/FieldArray/FieldArray'
 interface PaniniFormProps {
   isOpened?: boolean
   endFormFnc: () => void
@@ -71,6 +72,7 @@ export const PaniniForm = ({ isOpened }: PaniniFormProps) => {
             </FormField>
             <FormField>
               <h3 className={styles.fieldName}>Meat</h3>
+              <FieldArray groupName="meat" />
             </FormField>
           </FormCard>
           <FormCard header="CONFIGURE EXTRAS">
