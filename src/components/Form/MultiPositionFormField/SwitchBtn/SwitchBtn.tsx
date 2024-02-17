@@ -1,5 +1,4 @@
 import { InputHTMLAttributes, useState } from 'react'
-// import { useFormContext } from 'react-hook-form'
 
 import styles from './SwitchBtn.module.css'
 
@@ -16,18 +15,18 @@ export const SwitchBtn = ({
   const changeCheckbox = () => {
     setisChecked((prev) => !prev)
     handleSwitchBtnChange(isChecked)
-
   }
 
   return (
     <label className={styles.switch}>
       <input
         type="checkbox"
+        className={styles.input}
         checked={isChecked}
         onChange={() => changeCheckbox()}
         {...rest}
       />
-      <span className={`${styles.slider} ${styles.round}`}></span>
+      <span className={styles.slider}></span>
     </label>
   )
 }

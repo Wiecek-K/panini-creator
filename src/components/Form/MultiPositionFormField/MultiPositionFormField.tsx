@@ -2,7 +2,7 @@ import { useFormContext, useFieldArray } from 'react-hook-form'
 import React, { ReactElement } from 'react'
 import { FormField } from '../FormField/FormField'
 import { capitalizeFirstLetter } from '../../../utils/capitalizeFirstLetter'
-import { SwitchBtn } from './Switch/SwitchBtn'
+import { SwitchBtn } from './SwitchBtn/SwitchBtn'
 import styles from './MultiPositionFormField.module.css'
 
 interface MultiPositionFormFieldProps {
