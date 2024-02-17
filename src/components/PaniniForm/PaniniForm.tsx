@@ -6,13 +6,15 @@ import { FormCard } from '../Form/FormCard/FormCard'
 import { FormField } from '../Form/FormField/FormField'
 import { Checkbox } from '../Form/Checkbox/Checkbox'
 import { Radio } from '../Form/Radio/Radio'
+import { MultiPositionFormField } from '../Form/MultiPositionFormField/MultiPositionFormField'
 import styles from './PaniniForm.module.css'
 
 import { vegetableVariant } from '../../data/vegetable'
 import { breadVariants } from '../../data/bread'
 import { spreadVariant } from '../../data/spread'
 import { servingVariant } from '../../data/serving'
-import { FieldArray } from '../Form/FieldArray/FieldArray'
+import { meatVariants } from '../../data/meat'
+import { dressingVariants } from '../../data/dressing'
 interface PaniniFormProps {
   isOpened?: boolean
   endFormFnc: () => void
@@ -70,10 +72,18 @@ export const PaniniForm = ({ isOpened }: PaniniFormProps) => {
                 ))}
               </div>
             </FormField>
-            <FormField>
-              <h3 className={styles.fieldName}>Meat</h3>
-              <FieldArray groupName="meat" />
-            </FormField>
+            <MultiPositionFormField
+              name={'meat'}
+              selectorComponent={
+                <CarouselSwitch name="meat" options={meatVariants} />
+              }
+            />
+            <MultiPositionFormField
+              name={'dressing'}
+              selectorComponent={
+                <CarouselSwitch name="dressing" options={dressingVariants} />
+              }
+            />
           </FormCard>
           <FormCard header="CONFIGURE EXTRAS">
             <FormField>

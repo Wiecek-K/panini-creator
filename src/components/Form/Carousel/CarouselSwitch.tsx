@@ -10,16 +10,16 @@ import Slider from 'react-slick'
 
 import { capitalizeFirstLetter } from '../../../utils/capitalizeFirstLetter'
 
-interface CarouselSwitchProps {
+export interface CarouselSwitchProps {
   name: string
   options: string[]
-  icons: boolean
+  icons?: boolean
 }
 
 export const CarouselSwitch = ({
   name,
   options,
-  icons,
+  icons = false,
 }: CarouselSwitchProps) => {
   const { register, setValue } = useFormContext()
   useEffect(() => {

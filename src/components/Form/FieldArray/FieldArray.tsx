@@ -2,7 +2,7 @@ import { useFormContext, useFieldArray } from 'react-hook-form'
 
 import { CarouselSwitch } from '../Carousel/CarouselSwitch'
 import { meatVariants } from '../../../data/meat'
-import styles from './FieldArray.module.css'
+// import styles from './FieldArray.module.css'
 
 interface FieldArrayProps {
   groupName: string
@@ -17,8 +17,7 @@ export const FieldArray = ({ groupName }: FieldArrayProps) => {
   })
 
 
-  const meatMethods = useFieldArray({ control, name: 'meat2' })
-  const zuckerMethods = useFieldArray({ control, name: 'zucker' })
+
 
   return (
     <div className={groupName}>

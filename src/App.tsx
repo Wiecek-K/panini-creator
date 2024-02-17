@@ -1,3 +1,4 @@
+import { StrictMode } from 'react'
 import './App.css'
 import { useState } from 'react'
 import { SplashScreen } from './components/SplashScreen/SplashScreen'
@@ -15,7 +16,7 @@ function App() {
   }
 
   return (
-    <>
+    <StrictMode>
       {!isFormEnd && (
         <>
           <SplashScreen
@@ -40,7 +41,7 @@ function App() {
           isClosing={isAppBegan}
         />
       )}
-    </>
+    </StrictMode>
   )
 }
 
