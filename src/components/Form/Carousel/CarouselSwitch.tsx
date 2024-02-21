@@ -9,23 +9,32 @@ import styles from './CarouselSwitch.module.css'
 import Slider from 'react-slick'
 
 import { capitalizeFirstLetter } from '../../../utils/capitalizeFirstLetter'
+import { validateInitialIndex } from '../../../utils/validateInitialIndex'
 
 export interface CarouselSwitchProps {
   name: string
   options: string[]
   icons?: boolean
   sectionName?: string
+  initialIndex?: number
 }
 
 export const CarouselSwitch = ({
   name,
-  options,
   sectionName = '',
+  options,
+  initialIndex = 0,
   icons = false,
 }: CarouselSwitchProps) => {
+  initialIndex = validateInitialIndex(initialIndex, options)
+  console.log(initialIndex)
+
   const { register, setValue } = useFormContext()
   useEffect(() => {
-    setValue(sectionName ? `${sectionName}.${name}` : name, options[0])
+    setValue(
+      sectionName ? `${sectionName}.${name}` : name,
+      options[initialIndex]
+    )
   }, [name, options, setValue, sectionName])
 
   const settings = {
@@ -42,6 +51,7 @@ export const CarouselSwitch = ({
         sectionName ? `${sectionName}.${name}` : name,
         options[currentSlide]
       ),
+    initialSlide: initialIndex,
   }
 
   return (
