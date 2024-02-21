@@ -10,11 +10,13 @@ import styles from './MultiPositionFormField.module.css'
 interface MultiPositionFormFieldProps {
   name: string
   selectorComponent: ReactElement
+  linesBetweenSelectors: boolean
 }
 
 export const MultiPositionFormField = ({
   name,
   selectorComponent,
+  linesBetweenSelectors,
 }: MultiPositionFormFieldProps) => {
   const { control } = useFormContext()
 
@@ -48,7 +50,10 @@ export const MultiPositionFormField = ({
           </div>
           {fields.map((field, index) =>
             index === 0 ? null : (
-              <SubstractBtn key={field.id} onClick={() => remove(index)} />
+              <SubstractBtn
+                key={field.id + '_substract'}
+                onClick={() => remove(index)}
+              />
             )
           )}
         </div>
@@ -58,12 +63,13 @@ export const MultiPositionFormField = ({
         {fields.map((field, index) => {
           return (
             <>
-              <div key={field.id}>
+              <div>
                 {React.cloneElement(selectorComponent, {
                   name: `${name}.${index}`,
+                  key: field.id,
                 })}
               </div>
-              {index !== fields.length - 1 ? (
+              {index !== fields.length - 1 && linesBetweenSelectors ? (
                 <div className={styles.line} />
               ) : null}
             </>

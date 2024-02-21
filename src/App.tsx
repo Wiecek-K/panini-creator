@@ -5,7 +5,7 @@ import { SplashScreen } from './components/SplashScreen/SplashScreen'
 import { PaniniForm } from './components/PaniniForm/PaniniForm'
 
 function App() {
-  const [isAppBegan, setIsAppBegan] = useState(false)
+  const [isAppBegan, setIsAppBegan] = useState(true)
   const [isFormEnd, setIsFormEnd] = useState(false)
 
   const handleOpenForm = () => {
@@ -19,14 +19,14 @@ function App() {
     <StrictMode>
       {!isFormEnd && (
         <>
-          <SplashScreen
+          {/* <SplashScreen
             header="Panini Creator"
             btnText="BEGIN"
             btnFnc={() => {
               handleOpenForm()
             }}
             isClosing={isAppBegan}
-          />
+          /> */}
           <PaniniForm isOpened={isAppBegan} endFormFnc={handleEndForm} />
         </>
       )}

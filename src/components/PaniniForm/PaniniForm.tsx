@@ -7,6 +7,7 @@ import { FormField } from '../Form/FormField/FormField'
 import { Checkbox } from '../Form/Checkbox/Checkbox'
 import { Radio } from '../Form/Radio/Radio'
 import { MultiPositionFormField } from '../Form/MultiPositionFormField/MultiPositionFormField'
+import { Select } from '../Form/Select/Select'
 import styles from './PaniniForm.module.css'
 
 import { vegetableVariant } from '../../data/vegetable'
@@ -15,6 +16,7 @@ import { spreadVariant } from '../../data/spread'
 import { servingVariant } from '../../data/serving'
 import { meatVariants } from '../../data/meat'
 import { dressingVariants } from '../../data/dressing'
+import { cheeseVariants } from '../../data/cheese'
 interface PaniniFormProps {
   isOpened?: boolean
   endFormFnc: () => void
@@ -77,11 +79,20 @@ export const PaniniForm = ({ isOpened }: PaniniFormProps) => {
               selectorComponent={
                 <CarouselSwitch name="meat" options={meatVariants} />
               }
+              linesBetweenSelectors={true}
             />
             <MultiPositionFormField
               name={'dressing'}
               selectorComponent={
                 <CarouselSwitch name="dressing" options={dressingVariants} />
+              }
+              linesBetweenSelectors={true}
+            />
+            <MultiPositionFormField
+              name="cheese"
+              linesBetweenSelectors={false}
+              selectorComponent={
+                <Select name="cheese" options={cheeseVariants} />
               }
             />
           </FormCard>
