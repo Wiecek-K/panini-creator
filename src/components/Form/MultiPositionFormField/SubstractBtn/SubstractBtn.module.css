@@ -1,0 +1,26 @@
+.substractBtn {
+  position: relative;
+  width: 17px;
+  height: 17px;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 50%;
+  transition: background-color 300ms linear;
+}
+
+.minus {
+  position: absolute;
+  width: 8px;
+  height: 0.5px;
+  background-color: black;
+  transition: background-color 100ms linear;
+  top: 7px;
+  left: 4px;
+}
+
+.substractBtn:hover {
+  background-color: black;
+}
+.substractBtn:hover .minus {
+  background-color: white;
+}

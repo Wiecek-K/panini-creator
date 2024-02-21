@@ -1,7 +1,7 @@
 .formContainer {
   margin: auto;
-  width: 800px;
-  height: 250vh;
+  width: 630px;
+  height: 1800px;
   opacity: 0;
   visibility: hidden;
   display: none;
@@ -10,6 +10,20 @@
 .open {
   opacity: 1;
   visibility: visible;
-  background-color: blue;
+
+  background: rgb(34, 193, 195);
+  background: linear-gradient(
+    0deg,
+    rgba(34, 193, 195, 1) 0%,
+    rgba(253, 187, 45, 1) 100%
+  );
   display: block;
+}
+
+.formCard {
+  margin-bottom: 100px;
+}
+
+.slider {
+  width: 200px;
 }

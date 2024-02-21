@@ -29,4 +29,13 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  height: 100%;
+}
+
+body::-webkit-scrollbar {
+  width: 0.5em;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: transparent;
 }

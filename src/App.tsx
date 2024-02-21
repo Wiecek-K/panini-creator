@@ -1,10 +1,11 @@
+import { StrictMode } from 'react'
 import './App.css'
 import { useState } from 'react'
 import { SplashScreen } from './components/SplashScreen/SplashScreen'
-import { Form } from './components/Form/Form'
+import { PaniniForm } from './components/PaniniForm/PaniniForm'
 
 function App() {
-  const [isAppBegan, setIsAppBegan] = useState(false)
+  const [isAppBegan, setIsAppBegan] = useState(true)
   const [isFormEnd, setIsFormEnd] = useState(false)
 
   const handleOpenForm = () => {
@@ -15,18 +16,18 @@ function App() {
   }
 
   return (
-    <>
+    <StrictMode>
       {!isFormEnd && (
         <>
-          <SplashScreen
+          {/* <SplashScreen
             header="Panini Creator"
             btnText="BEGIN"
             btnFnc={() => {
               handleOpenForm()
             }}
             isClosing={isAppBegan}
-          />
-          <Form isOpened={isAppBegan} endFormFnc={handleEndForm} />
+          /> */}
+          <PaniniForm isOpened={isAppBegan} endFormFnc={handleEndForm} />
         </>
       )}
 
@@ -40,7 +41,7 @@ function App() {
           isClosing={isAppBegan}
         />
       )}
-    </>
+    </StrictMode>
   )
 }
 

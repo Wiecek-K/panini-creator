@@ -1,0 +1,36 @@
+.formContainer {
+  margin: auto;
+  margin-bottom: 50px;
+  width: 630px;
+  opacity: 0;
+  visibility: hidden;
+  display: none;
+  transition: opacity 3s;
+}
+.open {
+  opacity: 1;
+  visibility: visible;
+  display: block;
+}
+
+.multiselectContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: end;
+  max-width: 340px;
+  gap: 15px 8px;
+}
+
+.spreadsContainer {
+  display: flex;
+  gap: 15px;
+  flex-direction: column;
+}
+
+.fieldName {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 23px;
+  letter-spacing: 0em;
+  text-align: left;
+}
