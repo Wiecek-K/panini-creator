@@ -67,6 +67,7 @@ export const Select = ({ name, sectionName = '', options }: SelectProps) => {
         ...styles,
         margin: 0,
         borderRadius: 0,
+        zIndex: 5,
       }
     },
     menuList: (styles) => {
