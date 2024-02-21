@@ -6,9 +6,15 @@ import styles from './Checkbox.module.css'
 interface CheckboxProps extends InputHTMLAttributes<HTMLInputElement> {
   name: string
   labelText: string
+  sectionName?: string
 }
 
-export const Checkbox = ({ name, labelText, ...rest }: CheckboxProps) => {
+export const Checkbox = ({
+  name,
+  labelText,
+  sectionName = '',
+  ...rest
+}: CheckboxProps) => {
   const { register } = useFormContext()
   return (
     <div className={styles.container}>
@@ -16,7 +22,7 @@ export const Checkbox = ({ name, labelText, ...rest }: CheckboxProps) => {
         className={styles.input}
         type="checkbox"
         id={name}
-        {...register(name)}
+        {...register(sectionName ? `${sectionName}.${name}` : name)}
         {...rest}
       />
       <label className={styles.label} htmlFor={name}>

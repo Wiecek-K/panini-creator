@@ -6,9 +6,15 @@ import styles from './Multiselect.module.css'
 
 interface MultiselectProps extends InputHTMLAttributes<HTMLInputElement> {
   groupName: string
+  sectionName?: string
 }
 
-export const Multiselect = ({ groupName, name, ...rest }: MultiselectProps) => {
+export const Multiselect = ({
+  groupName,
+  name,
+  sectionName,
+  ...rest
+}: MultiselectProps) => {
   const { register } = useFormContext()
   return name ? (
     <div className={styles.multiselectField}>
@@ -16,7 +22,9 @@ export const Multiselect = ({ groupName, name, ...rest }: MultiselectProps) => {
         className={styles.input}
         type="checkbox"
         id={name}
-        {...register(`${groupName}.${name}`)}
+        {...register(
+          `${sectionName ? sectionName + '.' : ''}${groupName}.${name}`
+        )}
         {...rest}
       />
       <label className={styles.label} htmlFor={name}>

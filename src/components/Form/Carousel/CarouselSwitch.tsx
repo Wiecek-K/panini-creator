@@ -14,17 +14,19 @@ export interface CarouselSwitchProps {
   name: string
   options: string[]
   icons?: boolean
+  sectionName?: string
 }
 
 export const CarouselSwitch = ({
   name,
   options,
+  sectionName = '',
   icons = false,
 }: CarouselSwitchProps) => {
   const { register, setValue } = useFormContext()
   useEffect(() => {
-    setValue(name, options[0])
-  }, [name, options, setValue])
+    setValue(sectionName ? `${sectionName}.${name}` : name, options[0])
+  }, [name, options, setValue, sectionName])
 
   const settings = {
     arrows: true,
@@ -36,12 +38,18 @@ export const CarouselSwitch = ({
     slidesToShow: 1,
     slidesToScroll: 1,
     afterChange: (currentSlide: number) =>
-      setValue(name, options[currentSlide]),
+      setValue(
+        sectionName ? `${sectionName}.${name}` : name,
+        options[currentSlide]
+      ),
   }
 
   return (
     <>
-      <input type="hidden" {...register(name)} />
+      <input
+        type="hidden"
+        {...register(sectionName ? `${sectionName}.${name}` : name)}
+      />
       <Slider {...settings}>
         {options.map((value, index) => (
           <div key={index}>

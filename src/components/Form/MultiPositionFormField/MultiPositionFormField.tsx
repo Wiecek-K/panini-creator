@@ -9,12 +9,14 @@ import styles from './MultiPositionFormField.module.css'
 
 interface MultiPositionFormFieldProps {
   name: string
+  sectionName?: string
   selectorComponent: ReactElement
   linesBetweenSelectors: boolean
 }
 
 export const MultiPositionFormField = ({
   name,
+  sectionName = '',
   selectorComponent,
   linesBetweenSelectors,
 }: MultiPositionFormFieldProps) => {
@@ -22,7 +24,7 @@ export const MultiPositionFormField = ({
 
   const { fields, append, remove } = useFieldArray({
     control,
-    name,
+    name: sectionName ? `${sectionName}.${name}` : name,
   })
 
   const [isChecked, setIsChecked] = useState(false)
@@ -66,6 +68,7 @@ export const MultiPositionFormField = ({
               <div>
                 {React.cloneElement(selectorComponent, {
                   name: `${name}.${index}`,
+                  sectionName: sectionName,
                   key: field.id,
                 })}
               </div>

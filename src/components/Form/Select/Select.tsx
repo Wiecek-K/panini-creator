@@ -9,10 +9,11 @@ import { capitalizeFirstLetter } from '../../../utils/capitalizeFirstLetter'
 
 interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
   name: string
+  sectionName?: string
   options: string[]
 }
 
-export const Select = ({ name, options }: SelectProps) => {
+export const Select = ({ name, sectionName = '', options }: SelectProps) => {
   const optionsObjectsArray = options.map((option) => ({
     label: capitalizeFirstLetter(option),
     value: option,
@@ -20,8 +21,11 @@ export const Select = ({ name, options }: SelectProps) => {
 
   const { control, setValue } = useFormContext()
   useEffect(() => {
-    setValue(name, optionsObjectsArray[0])
-  }, [name, optionsObjectsArray, setValue])
+    setValue(
+      sectionName ? `${sectionName}.${name}` : name,
+      optionsObjectsArray[0]
+    )
+  }, [])
 
   const selectStyles: StylesConfig = {
     container: (styles) => {
@@ -43,7 +47,7 @@ export const Select = ({ name, options }: SelectProps) => {
         '.mySelect': {
           '&__dropdown-indicator': {
             transform: menuIsOpen ? 'rotate(180deg)' : '',
-            transition: 'transform 200ms', // <--- Color of your choice
+            transition: 'transform 200ms',
           },
         },
       }
@@ -90,13 +94,13 @@ export const Select = ({ name, options }: SelectProps) => {
   }: DropdownIndicatorProps<typeof DropdownIndicator>) => {
     return (
       <components.DropdownIndicator {...props}>
-        <img src="/public/icons/Vector 15.svg" />
+        <img src="/icons/Vector 15.svg" />
       </components.DropdownIndicator>
     )
   }
-  return name ? (
+  return (
     <Controller
-      name={name}
+      name={sectionName ? `${sectionName}.${name}` : name}
       control={control}
       defaultValue={optionsObjectsArray[0]}
       render={({ field: { onChange, value, name } }) => (
@@ -113,5 +117,5 @@ export const Select = ({ name, options }: SelectProps) => {
         />
       )}
     />
-  ) : null
+  )
 }
