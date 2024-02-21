@@ -53,7 +53,7 @@ export const PaniniForm = ({ isOpened }: PaniniFormProps) => {
     <div className={`${styles.formContainer} ${isOpened ? styles.open : ''}`}>
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <FormCard header="CONFIGURE BASE">
+          {/* <FormCard header="CONFIGURE BASE">
             <FormField>
               <h3 className={styles.fieldName}>Bread</h3>
               <CarouselSwitch
@@ -117,12 +117,7 @@ export const PaniniForm = ({ isOpened }: PaniniFormProps) => {
             <input placeholder="eg. Club Panini" {...register(`paniniName`)} />
             <button type="submit">PLACE ORDER</button>
             <button type="reset">START AGAIN</button>
-          </FormCard>
-          {/* <Multiselect groupName="vegetables" name="onion" />
-        <Multiselect groupName="vegetables" name="tomato" /> */}
-          {/* <Select name="gender" options={['female', 'male', 'other']} /> */}
-
-          {/* <Input type=  "submit" value="Submit" /> */}
+          </FormCard> */}
         </form>
       </FormProvider>
     </div>
