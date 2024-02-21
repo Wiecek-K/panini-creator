@@ -62,8 +62,28 @@ export const PaniniForm = ({ isOpened }: PaniniFormProps) => {
                 options={breadVariants}
               />
             </FormField>
+            <MultiPositionFormField
+              name="cheese"
+              linesBetweenSelectors={false}
+              selectorComponent={
+                <Select name="cheese" options={cheeseVariants} />
+              }
+            />
+            <MultiPositionFormField
+              name={'meat'}
+              selectorComponent={<Select name="meat" options={meatVariants} />}
+              linesBetweenSelectors={false}
+            />
+            <MultiPositionFormField
+              name={'dressing'}
+              selectorComponent={
+                <CarouselSwitch name="dressing" options={dressingVariants} />
+              }
+              linesBetweenSelectors={true}
+            />
+
             <FormField>
-              <h3 className={styles.fieldName}>Cheese</h3>
+              <h3 className={styles.fieldName}>Vegetables</h3>
               <div className={styles.multiselectContainer}>
                 {vegetableVariant.map((vegetable) => (
                   <Multiselect
@@ -74,27 +94,6 @@ export const PaniniForm = ({ isOpened }: PaniniFormProps) => {
                 ))}
               </div>
             </FormField>
-            <MultiPositionFormField
-              name={'meat'}
-              selectorComponent={
-                <CarouselSwitch name="meat" options={meatVariants} />
-              }
-              linesBetweenSelectors={true}
-            />
-            <MultiPositionFormField
-              name={'dressing'}
-              selectorComponent={
-                <CarouselSwitch name="dressing" options={dressingVariants} />
-              }
-              linesBetweenSelectors={true}
-            />
-            <MultiPositionFormField
-              name="cheese"
-              linesBetweenSelectors={false}
-              selectorComponent={
-                <Select name="cheese" options={cheeseVariants} />
-              }
-            />
           </FormCard>
           <FormCard header="CONFIGURE EXTRAS">
             <FormField>
