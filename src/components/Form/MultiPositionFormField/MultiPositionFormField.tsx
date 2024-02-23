@@ -20,11 +20,13 @@ export const MultiPositionFormField = ({
   selectorComponent,
   linesBetweenSelectors,
 }: MultiPositionFormFieldProps) => {
+  const componentName = sectionName ? `${sectionName}.${name}` : name
+
   const { control } = useFormContext()
 
   const { fields, append, remove } = useFieldArray({
     control,
-    name: sectionName ? `${sectionName}.${name}` : name,
+    name: componentName,
   })
 
   const [isChecked, setIsChecked] = useState(false)
@@ -65,13 +67,11 @@ export const MultiPositionFormField = ({
         {fields.map((field, index) => {
           return (
             <>
-              <div>
-                {React.cloneElement(selectorComponent, {
-                  name: `${name}.${index}`,
-                  sectionName: sectionName,
-                  key: field.id,
-                })}
-              </div>
+              {React.cloneElement(selectorComponent, {
+                name: `${name}.${index}`,
+                sectionName: sectionName,
+                key: field.id,
+              })}
               {index !== fields.length - 1 && linesBetweenSelectors ? (
                 <div className={styles.line} />
               ) : null}

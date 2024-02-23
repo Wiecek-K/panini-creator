@@ -7,7 +7,6 @@
 }
 
 .slick-prev:before {
-  /* background-color: black; */
   color: black;
   content: url('icons/slick-prev.svg');
 }

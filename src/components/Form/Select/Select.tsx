@@ -18,19 +18,19 @@ export const Select = ({ name, sectionName = '', options }: SelectProps) => {
     label: capitalizeFirstLetter(option),
     value: option,
   }))
+  const componentName = sectionName ? `${sectionName}.${name}` : name
 
   const { control, setValue } = useFormContext()
   useEffect(() => {
-    setValue(
-      sectionName ? `${sectionName}.${name}` : name,
-      optionsObjectsArray[0]
-    )
+    setValue(componentName, optionsObjectsArray[0])
   }, [])
 
   const selectStyles: StylesConfig = {
     container: (styles) => {
       return {
         ...styles,
+        minHeight: '30px',
+        height: '35px',
       }
     },
     control: (styles, { menuIsOpen }) => {
@@ -38,6 +38,7 @@ export const Select = ({ name, sectionName = '', options }: SelectProps) => {
         ...styles,
         backgroundColor: 'white',
         width: '250px',
+        minHeight: '30px',
         height: '35px',
         border: '0.5px solid black',
         borderRadius: '0',
@@ -101,7 +102,7 @@ export const Select = ({ name, sectionName = '', options }: SelectProps) => {
   }
   return (
     <Controller
-      name={sectionName ? `${sectionName}.${name}` : name}
+      name={componentName}
       control={control}
       defaultValue={optionsObjectsArray[0]}
       render={({ field: { onChange, value, name } }) => (

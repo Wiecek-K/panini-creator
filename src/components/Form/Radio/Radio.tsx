@@ -16,13 +16,14 @@ export const Radio = ({
   ...rest
 }: RadioProps) => {
   const { register } = useFormContext()
+  const componentName = sectionName ? `${sectionName}.${name}` : name
   return (
     <>
       {options.map((option) => {
         return (
           <div className={styles.container} key={`${name}.${option}`}>
             <input
-              {...register(sectionName ? `${sectionName}.${name}` : name)}
+              {...register(componentName)}
               className={styles.input}
               id={`${name}.${option}`}
               type="radio"

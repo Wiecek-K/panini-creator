@@ -27,14 +27,11 @@ export const CarouselSwitch = ({
   icons = false,
 }: CarouselSwitchProps) => {
   initialIndex = validateInitialIndex(initialIndex, options)
-  console.log(initialIndex)
+  const componentName = sectionName ? `${sectionName}.${name}` : name
 
   const { register, setValue } = useFormContext()
   useEffect(() => {
-    setValue(
-      sectionName ? `${sectionName}.${name}` : name,
-      options[initialIndex]
-    )
+    setValue(componentName, options[initialIndex])
   }, [name, options, setValue, sectionName])
 
   const settings = {
@@ -47,19 +44,13 @@ export const CarouselSwitch = ({
     slidesToShow: 1,
     slidesToScroll: 1,
     afterChange: (currentSlide: number) =>
-      setValue(
-        sectionName ? `${sectionName}.${name}` : name,
-        options[currentSlide]
-      ),
+      setValue(componentName, options[currentSlide]),
     initialSlide: initialIndex,
   }
 
   return (
     <>
-      <input
-        type="hidden"
-        {...register(sectionName ? `${sectionName}.${name}` : name)}
-      />
+      <input type="hidden" {...register(componentName)} />
       <Slider {...settings}>
         {options.map((value, index) => (
           <div key={index}>
