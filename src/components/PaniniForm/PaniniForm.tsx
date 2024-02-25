@@ -43,7 +43,7 @@ interface PaniniFormProps {
 
 // export type FormGenerator = StepOneData & StepTwoData
 
-export const PaniniForm = ({ isOpened }: PaniniFormProps) => {
+export const PaniniForm = ({ isOpened, endFormFnc }: PaniniFormProps) => {
   const onSubmit = (data: FieldValues) =>
     console.log({
       ...data,
@@ -173,6 +173,7 @@ export const PaniniForm = ({ isOpened }: PaniniFormProps) => {
             </FormField>
             <button
               type="submit"
+              onClick={endFormFnc}
               className={styles.primaryBtn + ' ' + styles.submitBtn}
             >
               PLACE ORDER
