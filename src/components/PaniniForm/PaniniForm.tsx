@@ -154,13 +154,36 @@ export const PaniniForm = ({ isOpened }: PaniniFormProps) => {
               </div>
             </FormField>
           </FormCard>
-          {/*
           <FormCard header="FINALIZE ORDER">
-          
-          </FormCard>  */}
-          <input placeholder="eg. Club Panini" {...register(`paniniName`)} />
-          <button type="submit">PLACE ORDER</button>
-          <button type="reset">START AGAIN</button>{' '}
+            <FormField>
+              <h3 className={styles.fieldName}>Name panini</h3>
+              <input
+                className={styles.paniniNameInput}
+                placeholder="eg. Club Panini"
+                {...register(`paniniName`)}
+              />
+            </FormField>
+            <FormField>
+              <h3 className={styles.fieldName}>Cutlery</h3>
+              <Checkbox labelText="ADD TO ORDER" name="cutlery" />
+            </FormField>
+            <FormField>
+              <h3 className={styles.fieldName}>Napkins</h3>
+              <Checkbox labelText="ADD TO ORDER" name="napkins" />
+            </FormField>
+            <button
+              type="submit"
+              className={styles.primaryBtn + ' ' + styles.submitBtn}
+            >
+              PLACE ORDER
+            </button>
+            <button
+              type="reset"
+              className={styles.secondaryBtn + ' ' + styles.resetBtn}
+            >
+              START AGAIN
+            </button>
+          </FormCard>
         </form>
       </FormProvider>
     </div>

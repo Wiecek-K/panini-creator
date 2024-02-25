@@ -12,7 +12,23 @@
   visibility: visible;
   display: block;
 }
+.primaryBtn {
+  background-color: black;
+  color: white;
+  padding: 14px 20px;
+}
+.primaryBtn:hover {
+  text-decoration: underline;
+}
 
+.secondaryBtn {
+  padding: 14px 20px;
+  background-color: white;
+  border: 0.5px solid white;
+}
+.secondaryBtn:hover {
+  border: 0.5px solid black;
+}
 .multiselectContainer {
   display: flex;
   flex-wrap: wrap;
@@ -33,4 +49,37 @@
   line-height: 23px;
   letter-spacing: 0em;
   text-align: left;
+}
+
+.paniniNameInput {
+  width: 330px;
+  height: 36px;
+  border: 0.5px solid black;
+  padding: 10px;
+  padding-left: 15px;
+  font-family: 'Oxygen Mono', monospace;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+.paniniNameInput::placeholder {
+  font-family: 'Oxygen Mono', monospace;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+.submitBtn {
+  width: 100%;
+  margin-top: 50px;
+}
+
+.resetBtn {
+  position: absolute;
+  bottom: 26px;
+  left: 50%;
+  transform: translateX(-50%);
 }
