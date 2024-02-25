@@ -15,7 +15,7 @@ interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
 
 export const Select = ({ name, sectionName = '', options }: SelectProps) => {
   const optionsObjectsArray = options.map((option) => ({
-    label: capitalizeFirstLetter(option),
+    label: option.toUpperCase(),
     value: option,
   }))
   const componentName = sectionName ? `${sectionName}.${name}` : name
@@ -31,6 +31,12 @@ export const Select = ({ name, sectionName = '', options }: SelectProps) => {
         ...styles,
         minHeight: '30px',
         height: '35px',
+        fontFamily: 'Oxygen Mono',
+        fontSize: '12px',
+        fontWeight: 400,
+        lineHeight: '16px',
+        letterSpacing: '0em',
+        textAlign: 'center',
       }
     },
     control: (styles, { menuIsOpen }) => {

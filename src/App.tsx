@@ -8,39 +8,23 @@ function App() {
   const [isAppBegan, setIsAppBegan] = useState(true)
   const [isFormEnd, setIsFormEnd] = useState(false)
 
-  const handleOpenForm = () => {
+  const handleStartEndButtons = () => {
     setIsAppBegan((prev) => !prev)
   }
   const handleEndForm = () => {
+    handleStartEndButtons()
     setIsFormEnd(true)
   }
 
   return (
     <StrictMode>
-      {!isFormEnd && (
-        <>
-          {/* <SplashScreen
-            header="Panini Creator"
-            btnText="BEGIN"
-            btnFnc={() => {
-              handleOpenForm()
-            }}
-            isClosing={isAppBegan}
-          /> */}
-          <PaniniForm isOpened={isAppBegan} endFormFnc={handleEndForm} />
-        </>
-      )}
-
-      {isFormEnd && (
-        <SplashScreen
-          header="Panini ordered"
-          btnText="START AGAIN"
-          btnFnc={() => {
-            null
-          }}
-          isClosing={isAppBegan}
-        />
-      )}
+      <SplashScreen
+        header={isFormEnd ? 'Panini ordered' : 'Panini Creator'}
+        btnText={isFormEnd ? 'START AGAIN' : 'BEGIN'}
+        btnFnc={handleStartEndButtons}
+        isClosing={isAppBegan}
+      />
+      <PaniniForm isOpened={isAppBegan} endFormFnc={handleEndForm} />
     </StrictMode>
   )
 }
