@@ -53,17 +53,19 @@ export const PaniniForm = ({ isOpened }: PaniniFormProps) => {
     <div className={`${styles.formContainer} ${isOpened ? styles.open : ''}`}>
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(onSubmit)}>
-          {/* <FormCard header="CONFIGURE BASE">
+          <FormCard header="CONFIGURE BASE">
             <FormField>
               <h3 className={styles.fieldName}>Bread</h3>
               <CarouselSwitch
                 name="bread"
+                sectionName="base"
                 icons={true}
                 options={breadVariants}
               />
             </FormField>
             <MultiPositionFormField
               name="cheese"
+              sectionName="base"
               linesBetweenSelectors={false}
               selectorComponent={
                 <Select name="cheese" options={cheeseVariants} />
@@ -71,11 +73,13 @@ export const PaniniForm = ({ isOpened }: PaniniFormProps) => {
             />
             <MultiPositionFormField
               name={'meat'}
+              sectionName="base"
               selectorComponent={<Select name="meat" options={meatVariants} />}
               linesBetweenSelectors={false}
             />
             <MultiPositionFormField
               name={'dressing'}
+              sectionName="base"
               selectorComponent={
                 <CarouselSwitch name="dressing" options={dressingVariants} />
               }
@@ -89,13 +93,14 @@ export const PaniniForm = ({ isOpened }: PaniniFormProps) => {
                   <Multiselect
                     groupName="vegetableVariant"
                     name={vegetable}
+                    sectionName="base"
                     key={`vegetableVariant.${vegetable}`}
                   />
                 ))}
               </div>
             </FormField>
           </FormCard>
-          <FormCard header="CONFIGURE EXTRAS">
+          {/* <FormCard header="CONFIGURE EXTRAS">
             <FormField>
               <h3 className={styles.fieldName}>Spreads</h3>
               <div className={styles.spreadsContainer}>
@@ -114,10 +119,11 @@ export const PaniniForm = ({ isOpened }: PaniniFormProps) => {
             </FormField>
           </FormCard>
           <FormCard header="FINALIZE ORDER">
-            <input placeholder="eg. Club Panini" {...register(`paniniName`)} />
-            <button type="submit">PLACE ORDER</button>
-            <button type="reset">START AGAIN</button>
-          </FormCard> */}
+          
+          </FormCard>  */}
+          <input placeholder="eg. Club Panini" {...register(`paniniName`)} />
+          <button type="submit">PLACE ORDER</button>
+          <button type="reset">START AGAIN</button>{' '}
         </form>
       </FormProvider>
     </div>

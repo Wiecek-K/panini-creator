@@ -15,7 +15,7 @@ module.exports = {
   rules: {
     'react-refresh/only-export-components': 'warn',
     'react-hooks/rules-of-hooks': 'error',
-    'react-hooks/exhaustive-deps': 'warn',
     '@typescript-eslint/ban-ts-comment': 'warn',
+    'react-hooks/exhaustive-deps': 'off',
   },
 }

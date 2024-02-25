@@ -9,22 +9,30 @@ import styles from './CarouselSwitch.module.css'
 import Slider from 'react-slick'
 
 import { capitalizeFirstLetter } from '../../../utils/capitalizeFirstLetter'
+import { validateInitialIndex } from '../../../utils/validateInitialIndex'
 
 export interface CarouselSwitchProps {
   name: string
   options: string[]
   icons?: boolean
+  sectionName?: string
+  initialIndex?: number
 }
 
 export const CarouselSwitch = ({
   name,
+  sectionName = '',
   options,
+  initialIndex = 0,
   icons = false,
 }: CarouselSwitchProps) => {
+  initialIndex = validateInitialIndex(initialIndex, options)
+  const componentName = sectionName ? `${sectionName}.${name}` : name
+
   const { register, setValue } = useFormContext()
   useEffect(() => {
-    setValue(name, options[0])
-  }, [name, options, setValue])
+    setValue(componentName, options[initialIndex])
+  }, [name, options, setValue, sectionName])
 
   const settings = {
     arrows: true,
@@ -36,12 +44,13 @@ export const CarouselSwitch = ({
     slidesToShow: 1,
     slidesToScroll: 1,
     afterChange: (currentSlide: number) =>
-      setValue(name, options[currentSlide]),
+      setValue(componentName, options[currentSlide]),
+    initialSlide: initialIndex,
   }
 
   return (
     <>
-      <input type="hidden" {...register(name)} />
+      <input type="hidden" {...register(componentName)} />
       <Slider {...settings}>
         {options.map((value, index) => (
           <div key={index}>
@@ -52,7 +61,7 @@ export const CarouselSwitch = ({
                   className={styles.icon}
                 />
               )}
-              {value}
+              <span className={styles.text}>{value}</span>
             </div>
           </div>
         ))}

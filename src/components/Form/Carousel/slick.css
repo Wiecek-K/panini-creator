@@ -7,16 +7,17 @@
 }
 
 .slick-prev:before {
-  /* background-color: black; */
   color: black;
   content: url('icons/slick-prev.svg');
 }
 .slick-prev,
 .slick-next {
-  top: calc(50% - 3px);
+  top: 10px;
   z-index: 1;
 }
 
 .slick-next:before {
   content: url('/icons/slick-next.svg');
+}
+.slick-slider {
 }
