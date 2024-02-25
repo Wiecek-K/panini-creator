@@ -22,7 +22,7 @@ export const Select = ({ name, sectionName = '', options }: SelectProps) => {
 
   const { control, setValue } = useFormContext()
   useEffect(() => {
-    setValue(componentName, optionsObjectsArray[0])
+    setValue(componentName, optionsObjectsArray[0].value)
   }, [])
 
   const selectStyles: StylesConfig = {
@@ -91,6 +91,7 @@ export const Select = ({ name, sectionName = '', options }: SelectProps) => {
     },
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const DropdownIndicator: any = ({
     ...props
   }: DropdownIndicatorProps<typeof DropdownIndicator>) => {
@@ -108,9 +109,12 @@ export const Select = ({ name, sectionName = '', options }: SelectProps) => {
       render={({ field: { onChange, value, name } }) => (
         <ReactSelect
           components={{ DropdownIndicator }}
-          defaultValue={value}
-          onChange={onChange}
-          value={value}
+          onChange={(value) => {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            onChange(value.value)
+          }}
+          value={optionsObjectsArray.find((option) => option.value === value)}
           name={name}
           options={optionsObjectsArray}
           styles={selectStyles}
