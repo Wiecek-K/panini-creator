@@ -17,6 +17,8 @@ import { servingVariant } from '../../data/serving'
 import { meatVariants } from '../../data/meat'
 import { dressingVariants } from '../../data/dressing'
 import { cheeseVariants } from '../../data/cheese'
+import { eggVariants } from '../../data/egg'
+import { toppingVariant } from '../../data/topping'
 interface PaniniFormProps {
   isOpened?: boolean
   endFormFnc: () => void
@@ -42,7 +44,16 @@ interface PaniniFormProps {
 // export type FormGenerator = StepOneData & StepTwoData
 
 export const PaniniForm = ({ isOpened }: PaniniFormProps) => {
-  const onSubmit = (data: FieldValues) => console.log(data)
+  const onSubmit = (data: FieldValues) =>
+    console.log({
+      ...data,
+      base: {
+        ...data.base,
+        vegetableVariant: Object.keys(data.base.vegetableVariant).filter(
+          (key) => data.base.vegetableVariant[key]
+        ),
+      },
+    })
   const methods = useForm()
 
   //   const methods = useForm<FormGenerator>()
@@ -100,7 +111,14 @@ export const PaniniForm = ({ isOpened }: PaniniFormProps) => {
               </div>
             </FormField>
           </FormCard>
-          {/* <FormCard header="CONFIGURE EXTRAS">
+          <FormCard header="CONFIGURE EXTRAS">
+            <MultiPositionFormField
+              name={'egg'}
+              sectionName="extras"
+              selectorComponent={<Select name="egg" options={eggVariants} />}
+              linesBetweenSelectors={false}
+            />
+
             <FormField>
               <h3 className={styles.fieldName}>Spreads</h3>
               <div className={styles.spreadsContainer}>
@@ -108,6 +126,7 @@ export const PaniniForm = ({ isOpened }: PaniniFormProps) => {
                   <Checkbox
                     labelText={spread}
                     name={`spreads.${spread}`}
+                    sectionName="extras"
                     key={`spreads.${spread}`}
                   />
                 ))}
@@ -115,9 +134,27 @@ export const PaniniForm = ({ isOpened }: PaniniFormProps) => {
             </FormField>
             <FormField>
               <h3 className={styles.fieldName}>Serving</h3>
-              <Radio name={'serving'} options={servingVariant}></Radio>
+              <Radio
+                name={'serving'}
+                sectionName="extras"
+                options={servingVariant}
+              ></Radio>
+            </FormField>
+            <FormField>
+              <h3 className={styles.fieldName}>Topping</h3>
+              <div className={styles.toppingsContainer}>
+                {toppingVariant.map((topping) => (
+                  <Checkbox
+                    labelText={topping}
+                    name={`topping.${topping}`}
+                    key={`topping.${topping}`}
+                    sectionName="extras"
+                  />
+                ))}
+              </div>
             </FormField>
           </FormCard>
+          {/*
           <FormCard header="FINALIZE ORDER">
           
           </FormCard>  */}
