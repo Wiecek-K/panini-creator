@@ -37,50 +37,103 @@ export const MultiPositionFormField = ({
 
   return (
     <FormField>
-      <div className={styles.headerContainer}>
-        <h3 className={styles.fieldName}>{capitalizeFirstLetter(name)}</h3>
-        <div className={styles.buttonsContainer}>
-          <div className={styles.switchBtnContainer}>
-            <SwitchBtn
-              isChecked={isChecked}
-              onClick={() => {
-                setIsChecked(!isChecked)
-              }}
-              onChange={() => {
-                handleSwitchBtnChange(isChecked)
-              }}
-            />
-            {isChecked && <AddBtn onClick={() => append({})} />}
-          </div>
-          {fields.map((field, index) =>
-            index === 0 ? null : (
-              <SubstractBtn
-                key={field.id + '_substract'}
-                onClick={() => remove(index)}
-              />
-            )
-          )}
+      <div
+        className={`${styles.container} ${
+          linesBetweenSelectors ? styles.containerWhitLines : null
+        }`}
+      >
+        <div className={styles.headerContainer}>
+          <h3 className={styles.fieldName}>{capitalizeFirstLetter(name)}</h3>
         </div>
-      </div>
-
-      <div className={styles.selectorsColumn}>
-        {fields.map((field, index) => {
-          return (
-            <>
+        <div className={styles.buttonContainer}>
+          <SwitchBtn
+            isChecked={isChecked}
+            onClick={() => {
+              setIsChecked(!isChecked)
+            }}
+            onChange={() => {
+              handleSwitchBtnChange(isChecked)
+            }}
+          />
+          {isChecked && <AddBtn onClick={() => append({})} />}
+        </div>
+        {fields.map((field, index) => (
+          <>
+            {index === 0 ? null : (
+              <>
+                <div></div>
+                <div className={styles.buttonContainer}>
+                  <SubstractBtn
+                    key={field.id + '_substract'}
+                    onClick={() => remove(index)}
+                  />
+                </div>
+              </>
+            )}
+            <div className={styles.gap}></div>
+            <div
+              className={`${styles.selectorContainer} ${
+                index !== fields.length - 1 && linesBetweenSelectors
+                  ? styles.line
+                  : null
+              }`}
+            >
               {React.cloneElement(selectorComponent, {
                 name: `${name}.${index}`,
                 sectionName: sectionName,
                 key: field.id,
               })}
-              {index !== fields.length - 1 && linesBetweenSelectors ? (
-                <div className={styles.line} />
-              ) : null}
-            </>
-          )
-        })}
+            </div>
+          </>
+        ))}
       </div>
     </FormField>
   )
+  //   <FormField>
+  //     <div className={styles.headerContainer}>
+  //       <h3 className={styles.fieldName}>{capitalizeFirstLetter(name)}</h3>
+  //       <div className={styles.buttonsContainer}>
+  //         <div className={styles.switchBtnContainer}>
+  //           <SwitchBtn
+  //             isChecked={isChecked}
+  //             onClick={() => {
+  //               setIsChecked(!isChecked)
+  //             }}
+  //             onChange={() => {
+  //               handleSwitchBtnChange(isChecked)
+  //             }}
+  //           />
+  //           {isChecked && <AddBtn onClick={() => append({})} />}
+  //         </div>
+  //         {fields.map((field, index) =>
+  //           index === 0 ? null : (
+  //             <SubstractBtn
+  //               key={field.id + '_substract'}
+  //               onClick={() => remove(index)}
+  //             />
+  //           )
+  //         )}
+  //       </div>
+  //     </div>
+
+  //     <div className={styles.selectorsColumn}>
+  //       {fields.map((field, index) => {
+  //         return (
+  //           <>
+  //             {React.cloneElement(selectorComponent, {
+  //               name: `${name}.${index}`,
+  //               sectionName: sectionName,
+  //               key: field.id,
+  //             })}
+  //             {index !== fields.length - 1 && linesBetweenSelectors ? (
+  //               <div className={styles.line} />
+  //             ) : null}
+  //           </>
+  //         )
+  //       })}
+  //     </div>
+  //   </FormField>
+  // )
 }
 // ;<CarouselSwitch
 //   icons={false}

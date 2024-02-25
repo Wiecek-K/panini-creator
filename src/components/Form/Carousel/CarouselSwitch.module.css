@@ -1,6 +1,6 @@
 .slider {
   width: 250px;
-  margin-top: 3px;
+  height: 22px;
 }
 
 .sliderOption {
@@ -16,4 +16,8 @@
 
 .icon {
   margin-right: 8px;
+}
+
+.text {
+  margin-top: 3px;
 }

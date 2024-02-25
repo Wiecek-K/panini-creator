@@ -61,7 +61,7 @@ export const CarouselSwitch = ({
                   className={styles.icon}
                 />
               )}
-              {value}
+              <span className={styles.text}>{value}</span>
             </div>
           </div>
         ))}
