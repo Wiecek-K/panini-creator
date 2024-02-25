@@ -5,7 +5,7 @@ import { SplashScreen } from './components/SplashScreen/SplashScreen'
 import { PaniniForm } from './components/PaniniForm/PaniniForm'
 
 function App() {
-  const [isAppBegan, setIsAppBegan] = useState(true)
+  const [isAppBegan, setIsAppBegan] = useState(false)
   const [isFormEnd, setIsFormEnd] = useState(false)
 
   const handleStartEndButtons = () => {
