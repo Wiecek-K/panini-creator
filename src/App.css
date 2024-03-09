@@ -8,4 +8,5 @@
   display: flex;
   justify-content: center;
   position: relative;
+  scrollbar-gutter: stable both-edges;
 }

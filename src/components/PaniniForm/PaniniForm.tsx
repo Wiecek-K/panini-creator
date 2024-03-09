@@ -42,17 +42,45 @@ interface PaniniFormProps {
 // }
 
 // export type FormGenerator = StepOneData & StepTwoData
+export interface SandwichPayload {
+  sandwichName: string // Max. 35 characters
+  cutlery: boolean
+  napkins: boolean
+  base: {
+    bread: 'FULL GRAIN' | 'WHEAT'
+    cheese: Array<'MOZZARELLA' | 'STRACIATELLA' | 'EDAM' | 'GOUDA'>
+    meat: Array<'SALAMI' | 'HAM' | 'BACON' | 'CHICKEN'>
+    dressing: Array<'OLIVE OIL' | 'HONEY_MUSTARD' | 'RANCH' | 'MAYO'>
+    vegetables: Array<
+      | 'SALAD'
+      | 'TOMATO'
+      | 'OBERGINE'
+      | 'BEETROOT'
+      | 'PICKLES'
+      | 'ONION'
+      | 'PEPPER'
+      | 'ASPARAGUS'
+      | 'CUCUMBER'
+    >
+  }
+  extras: {
+    egg: Array<'FRIED EGG' | 'OMELET' | 'SCRAMBLED EGG'>
+    spreads: Array<'BUTTER' | 'HUMMUS' | 'GUACAMOLE'>
+    serving: 'COLD' | 'WARM' | 'GRILLED'
+    topping: 'SESAME' | null
+  }
+}
 
 export const PaniniForm = ({ isOpened, endFormFnc }: PaniniFormProps) => {
   const onSubmit = (data: FieldValues) =>
     console.log({
       ...data,
-      base: {
-        ...data.base,
-        vegetableVariant: Object.keys(data.base.vegetableVariant).filter(
-          (key) => data.base.vegetableVariant[key]
-        ),
-      },
+      // base: {
+      //   ...data.base,
+      //   vegetableVariant: Object.keys(data.base.vegetableVariant).filter(
+      //     (key) => data.base.vegetableVariant[key]
+      //   ),
+      // },
     })
   const methods = useForm()
 
@@ -100,14 +128,12 @@ export const PaniniForm = ({ isOpened, endFormFnc }: PaniniFormProps) => {
             <FormField>
               <h3 className={styles.fieldName}>Vegetables</h3>
               <div className={styles.multiselectContainer}>
-                {vegetableVariant.map((vegetable) => (
-                  <Multiselect
-                    groupName="vegetableVariant"
-                    name={vegetable}
-                    sectionName="base"
-                    key={`vegetableVariant.${vegetable}`}
-                  />
-                ))}
+                <Multiselect
+                  groupName="vegetableVariant"
+                  sectionName="base"
+                  options={vegetableVariant}
+                  
+                />
               </div>
             </FormField>
           </FormCard>
@@ -160,7 +186,7 @@ export const PaniniForm = ({ isOpened, endFormFnc }: PaniniFormProps) => {
               <input
                 className={styles.paniniNameInput}
                 placeholder="eg. Club Panini"
-                {...register(`paniniName`)}
+                {...register(`sandwichName`)}
               />
             </FormField>
             <FormField>
@@ -173,7 +199,7 @@ export const PaniniForm = ({ isOpened, endFormFnc }: PaniniFormProps) => {
             </FormField>
             <button
               type="submit"
-              onClick={endFormFnc}
+              // onClick={endFormFnc}
               className={styles.primaryBtn + ' ' + styles.submitBtn}
             >
               PLACE ORDER

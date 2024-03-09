@@ -5,34 +5,47 @@ import { capitalizeFirstLetter } from '../../../utils/capitalizeFirstLetter'
 import styles from './Multiselect.module.css'
 
 interface MultiselectProps extends InputHTMLAttributes<HTMLInputElement> {
-  name: string
   groupName: string
+  options: string[]
   sectionName?: string
 }
 
 export const Multiselect = ({
   groupName,
-  name,
+  options,
   sectionName,
   ...rest
 }: MultiselectProps) => {
-  const { register } = useFormContext()
-  const componentName = sectionName
-    ? `${sectionName}.${groupName}.${name}`
-    : `${groupName}.${name}`
+  const { setValue, getValues } = useFormContext()
+  const arrayName = sectionName ? `${sectionName}.${groupName}` : `${groupName}`
 
-  return name ? (
-    <div className={styles.multiselectField}>
-      <input
-        className={styles.input}
-        type="checkbox"
-        id={name}
-        {...register(componentName)}
-        {...rest}
-      />
-      <label className={styles.label} htmlFor={name}>
-        {capitalizeFirstLetter(name)}
-      </label>
-    </div>
-  ) : null
+  setValue(arrayName, [])
+
+  return (
+    <>
+      {options.map((option) => (
+        <div className={styles.multiselectField} key={option}>
+          <input
+            className={styles.input}
+            type="checkbox"
+            id={option}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              e.target.checked
+                ? setValue(arrayName, [...getValues(arrayName), option])
+                : setValue(
+                    arrayName,
+                    getValues(arrayName).filter(
+                      (item: string) => item !== option
+                    )
+                  )
+            }}
+            {...rest}
+          />
+          <label className={styles.label} htmlFor={option}>
+            {capitalizeFirstLetter(option)}
+          </label>
+        </div>
+      ))}
+    </>
+  )
 }
