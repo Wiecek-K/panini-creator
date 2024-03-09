@@ -129,10 +129,9 @@ export const PaniniForm = ({ isOpened, endFormFnc }: PaniniFormProps) => {
               <h3 className={styles.fieldName}>Vegetables</h3>
               <div className={styles.multiselectContainer}>
                 <Multiselect
-                  groupName="vegetableVariant"
+                  groupName="vegetables"
                   sectionName="base"
                   options={vegetableVariant}
-                  
                 />
               </div>
             </FormField>
