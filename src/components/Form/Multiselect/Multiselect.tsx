@@ -16,10 +16,8 @@ export const Multiselect = ({
   sectionName,
   ...rest
 }: MultiselectProps) => {
-  const { setValue, getValues } = useFormContext()
+  const { register } = useFormContext()
   const arrayName = sectionName ? `${sectionName}.${groupName}` : `${groupName}`
-
-  setValue(arrayName, [])
 
   return (
     <>
@@ -29,16 +27,8 @@ export const Multiselect = ({
             className={styles.input}
             type="checkbox"
             id={option}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              e.target.checked
-                ? setValue(arrayName, [...getValues(arrayName), option])
-                : setValue(
-                    arrayName,
-                    getValues(arrayName).filter(
-                      (item: string) => item !== option
-                    )
-                  )
-            }}
+            value={option}
+            {...register(arrayName)}
             {...rest}
           />
           <label className={styles.label} htmlFor={option}>
