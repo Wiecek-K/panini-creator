@@ -1,4 +1,9 @@
-import { FieldValues, useForm, FormProvider } from 'react-hook-form'
+import {
+  FieldValues,
+  useForm,
+  FormProvider,
+  FieldErrors,
+} from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 
@@ -75,7 +80,7 @@ export interface SandwichPayload {
 }
 
 const schema: z.ZodType<SandwichPayload> = z.object({
-  sandwichName: z.string().max(35),
+  sandwichName: z.string().max(35).min(1),
   napkins: z.boolean(),
   cutlery: z.boolean(),
   base: z.object({
@@ -103,25 +108,50 @@ const schema: z.ZodType<SandwichPayload> = z.object({
     ),
     spreads: z.array(z.enum(['BUTTER', 'HUMMUS', 'GUACAMOLE'])),
     topping: z.union([z.enum(['SESAME']), z.null(), z.literal(false)]),
-    serving: z.enum(['COLD', 'WARM', 'GRILLED']),
+    serving: z.enum(['COLD', 'WARM', 'GRILLED'], {
+      required_error: 'You have to choose something',
+    }),
   }),
 })
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const customErrorMap: z.ZodErrorMap = (issue /*ctx*/) => {
+  if (issue.code === z.ZodIssueCode.invalid_type) {
+    if (issue.expected === 'string') {
+      return { message: 'bad type!' }
+    }
+  }
+  if (issue.code === z.ZodIssueCode.custom) {
+    return { message: `less-than-${(issue.params || {}).minimum}` }
+  }
+  return { message: 'Something went wrong' }
+  // return { message: ctx.defaultError };
+}
+
+z.setErrorMap(customErrorMap)
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const PaniniForm = ({ isOpened, endFormFnc }: PaniniFormProps) => {
   const onSubmit = (data: FieldValues) =>
     console.log({
       ...data,
     })
-  const methods = useForm({ defaultValues: { sandwichName: 'test' } })
-  // { resolver: zodResolver(schema) }
-  //   const methods = useForm<FormGenerator>()
+  const onError = (errors: FieldErrors<SandwichPayload>) => {
+    console.log('Form Errors', errors)
+  }
 
-  const { handleSubmit, register } = methods
+  const methods = useForm<SandwichPayload>({
+    defaultValues: { sandwichName: 'test' },
+    resolver: zodResolver(schema),
+  })
+
+  const { handleSubmit, register, formState } = methods
+  const { errors } = formState
 
   return (
     <div className={`${styles.formContainer} ${isOpened ? styles.open : ''}`}>
       <FormProvider {...methods}>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit, onError)}>
           <FormCard header="CONFIGURE BASE">
             <FormField>
               <h3 className={styles.fieldName}>Bread</h3>
@@ -186,18 +216,25 @@ export const PaniniForm = ({ isOpened, endFormFnc }: PaniniFormProps) => {
             </FormField>
             <FormField>
               <h3 className={styles.fieldName}>Serving</h3>
+
               <Radio
                 name={'serving'}
                 sectionName="extras"
                 options={servingVariant}
-              ></Radio>
+              >
+                {errors.extras?.serving?.message ? (
+                  <div className={styles.errorMessage}>
+                    {errors.extras?.serving?.message}
+                  </div>
+                ) : null}
+              </Radio>
             </FormField>
             <FormField>
               <h3 className={styles.fieldName}>Topping</h3>
               <div className={styles.toppingsContainer}>
                 <Checkbox
                   labelText={toppingVariant[0]}
-                  name="toping"
+                  name="topping"
                   sectionName="extras"
                 />
               </div>
@@ -206,11 +243,16 @@ export const PaniniForm = ({ isOpened, endFormFnc }: PaniniFormProps) => {
           <FormCard header="FINALIZE ORDER">
             <FormField padding={'15px'}>
               <h3 className={styles.fieldName}>Name panini</h3>
-              <input
-                className={styles.paniniNameInput}
-                placeholder="eg. Club Panini"
-                {...register(`sandwichName`)}
-              />
+              <div className={styles.paniniNameInputContainer}>
+                <input
+                  className={styles.paniniNameInput}
+                  placeholder="eg. Club Panini"
+                  {...register(`sandwichName`)}
+                />
+                <div className={styles.errorMessage}>
+                  {errors.sandwichName?.message}
+                </div>
+              </div>
             </FormField>
             <FormField>
               <h3 className={styles.fieldName}>Cutlery</h3>

@@ -1,9 +1,16 @@
+.container {
+  margin: auto 0;
+  display: flex;
+  gap: 29px;
+  position: relative;
+}
+
 .label {
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: end;
-  gap: 20px;
+  gap: 6px;
   cursor: pointer;
   user-select: none;
   font-family: 'Oxygen Mono', monospace;
@@ -45,4 +52,9 @@
 
 .input:checked + .label .checkmark:after {
   display: block;
+}
+
+.errorContainer {
+  position: absolute;
+  bottom: calc(-1em - 4px);
 }
