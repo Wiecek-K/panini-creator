@@ -14,14 +14,20 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 }
-
 * {
   box-sizing: border-box;
   margin: 0;
 }
 
+html {
+  scrollbar-gutter: stable;
+  background-color: white;
+  scrollbar-width: none;
+}
+
 body {
   scroll-behavior: smooth;
+  scrollbar-gutter: stable both-edges;
   font-family: 'Instrument Serif', serif;
   color: #242424;
   min-width: 320px;
@@ -30,12 +36,4 @@ body {
   align-items: center;
   justify-content: center;
   height: 100%;
-}
-
-body::-webkit-scrollbar {
-  width: 0.5em;
-}
-
-body::-webkit-scrollbar-thumb {
-  background-color: transparent;
 }

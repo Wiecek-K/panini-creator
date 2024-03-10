@@ -1,4 +1,4 @@
-import { InputHTMLAttributes, useEffect } from 'react'
+import { InputHTMLAttributes,  } from 'react'
 import { useFormContext } from 'react-hook-form'
 
 import styles from './Checkbox.module.css'
@@ -7,22 +7,18 @@ interface CheckboxProps extends InputHTMLAttributes<HTMLInputElement> {
   name: string
   labelText: string
   sectionName?: string
-  initalValue?: boolean
+  // initalValue?: boolean
 }
 
 export const Checkbox = ({
   name,
   sectionName = '',
   labelText,
-  initalValue = false,
+  // initalValue = false,
   ...rest
 }: CheckboxProps) => {
   const componentName = sectionName ? `${sectionName}.${name}` : name
-  const { register, setValue } = useFormContext()
-
-  useEffect(() => {
-    setValue(componentName, initalValue)
-  }, [])
+  const { register } = useFormContext()
 
   return (
     <div className={styles.container}>

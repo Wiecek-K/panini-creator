@@ -1,42 +1,42 @@
 import { InputHTMLAttributes, useEffect } from 'react'
 import { useFormContext } from 'react-hook-form'
 
-import { capitalizeFirstLetter } from '../../../utils/capitalizeFirstLetter'
-import styles from './Multiselect.module.css'
+import styles from './CheckboxGroup.module.css'
 
-interface MultiselectProps extends InputHTMLAttributes<HTMLInputElement> {
+interface CheckboxGroupProps extends InputHTMLAttributes<HTMLInputElement> {
   groupName: string
-  options: string[]
   sectionName?: string
+  options: string[]
 }
 
-export const Multiselect = ({
+export const CheckboxGroup = ({
   groupName,
-  options,
   sectionName,
+  options,
   ...rest
-}: MultiselectProps) => {
+}: CheckboxGroupProps) => {
+  const componentName = sectionName ? `${sectionName}.${groupName}` : groupName
   const { register, setValue } = useFormContext()
-  const arrayName = sectionName ? `${sectionName}.${groupName}` : `${groupName}`
 
   useEffect(() => {
-    setValue(arrayName, [])
+    setValue(componentName, [])
   }, [])
 
   return (
     <>
       {options.map((option) => (
-        <div className={styles.multiselectField} key={option}>
+        <div className={styles.container} key={componentName + option}>
           <input
             className={styles.input}
             type="checkbox"
             id={option}
             value={option}
-            {...register(arrayName)}
+            {...register(componentName)}
             {...rest}
           />
           <label className={styles.label} htmlFor={option}>
-            {capitalizeFirstLetter(option)}
+            <span>{option}</span>
+            <span className={styles.checkmark}></span>
           </label>
         </div>
       ))}
