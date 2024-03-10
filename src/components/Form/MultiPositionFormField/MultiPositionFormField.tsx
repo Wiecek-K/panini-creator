@@ -1,5 +1,5 @@
 import { useFormContext, useFieldArray } from 'react-hook-form'
-import React, { ReactElement, useState } from 'react'
+import React, { ReactElement, useState, useEffect } from 'react'
 import { FormField } from '../FormField/FormField'
 import { capitalizeFirstLetter } from '../../../utils/capitalizeFirstLetter'
 import { SwitchBtn } from './SwitchBtn/SwitchBtn'
@@ -12,6 +12,7 @@ interface MultiPositionFormFieldProps {
   sectionName?: string
   selectorComponent: ReactElement
   linesBetweenSelectors: boolean
+  reset?: boolean
 }
 
 export const MultiPositionFormField = ({
@@ -19,6 +20,7 @@ export const MultiPositionFormField = ({
   sectionName = '',
   selectorComponent,
   linesBetweenSelectors,
+  reset,
 }: MultiPositionFormFieldProps) => {
   const componentName = sectionName ? `${sectionName}.${name}` : name
 
@@ -30,6 +32,12 @@ export const MultiPositionFormField = ({
   })
 
   const [isChecked, setIsChecked] = useState(false)
+
+  useEffect(() => {
+    setIsChecked(false)
+    remove()
+    console.log('reset')
+  }, [reset])
 
   const handleSwitchBtnChange = (isChecked: boolean) => {
     !isChecked ? append({}) : remove()

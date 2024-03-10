@@ -27,6 +27,7 @@ import { dressingVariants } from '../../data/dressing'
 import { cheeseVariants } from '../../data/cheese'
 import { eggVariants } from '../../data/egg'
 import { toppingVariant } from '../../data/topping'
+import { useState } from 'react'
 interface PaniniFormProps {
   isOpened?: boolean
   endFormFnc: () => void
@@ -114,7 +115,6 @@ const schema: z.ZodType<SandwichPayload> = z.object({
   }),
 })
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const customErrorMap: z.ZodErrorMap = (issue /*ctx*/) => {
   if (issue.code === z.ZodIssueCode.invalid_type) {
     if (issue.expected === 'string') {
@@ -132,13 +132,7 @@ z.setErrorMap(customErrorMap)
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const PaniniForm = ({ isOpened, endFormFnc }: PaniniFormProps) => {
-  const onSubmit = (data: FieldValues) =>
-    console.log({
-      ...data,
-    })
-  const onError = (errors: FieldErrors<SandwichPayload>) => {
-    console.log('Form Errors', errors)
-  }
+  const [resetFlag, setResetFlag] = useState(false)
 
   const methods = useForm<SandwichPayload>({
     defaultValues: { sandwichName: 'test' },
@@ -147,6 +141,18 @@ export const PaniniForm = ({ isOpened, endFormFnc }: PaniniFormProps) => {
 
   const { handleSubmit, register, formState } = methods
   const { errors } = formState
+
+  const onSubmit = (data: FieldValues) =>
+    console.log({
+      ...data,
+    })
+  const onError = (errors: FieldErrors<SandwichPayload>) => {
+    console.log('Form Errors', errors)
+  }
+  const handleReset = () => {
+    setResetFlag((prev) => !prev)
+    methods.reset()
+  }
 
   return (
     <div className={`${styles.formContainer} ${isOpened ? styles.open : ''}`}>
@@ -169,12 +175,14 @@ export const PaniniForm = ({ isOpened, endFormFnc }: PaniniFormProps) => {
               selectorComponent={
                 <Select name="cheese" options={cheeseVariants} />
               }
+              reset={resetFlag}
             />
             <MultiPositionFormField
               name={'meat'}
               sectionName="base"
               selectorComponent={<Select name="meat" options={meatVariants} />}
               linesBetweenSelectors={false}
+              reset={resetFlag}
             />
             <MultiPositionFormField
               name={'dressing'}
@@ -183,6 +191,7 @@ export const PaniniForm = ({ isOpened, endFormFnc }: PaniniFormProps) => {
                 <CarouselSwitch name="dressing" options={dressingVariants} />
               }
               linesBetweenSelectors={true}
+              reset={resetFlag}
             />
 
             <FormField>
@@ -202,6 +211,7 @@ export const PaniniForm = ({ isOpened, endFormFnc }: PaniniFormProps) => {
               sectionName="extras"
               selectorComponent={<Select name="egg" options={eggVariants} />}
               linesBetweenSelectors={false}
+              reset={resetFlag}
             />
 
             <FormField>
@@ -270,7 +280,8 @@ export const PaniniForm = ({ isOpened, endFormFnc }: PaniniFormProps) => {
               PLACE ORDER
             </button>
             <button
-              type="reset"
+              type="button"
+              onClick={handleReset}
               className={styles.secondaryBtn + ' ' + styles.resetBtn}
             >
               START AGAIN
