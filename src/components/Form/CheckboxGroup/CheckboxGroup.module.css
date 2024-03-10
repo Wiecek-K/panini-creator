@@ -1,0 +1,46 @@
+.label {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  gap: 20px;
+  cursor: pointer;
+  user-select: none;
+  font-family: 'Oxygen Mono', monospace;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 0em;
+  text-align: center;
+}
+
+.input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  height: 15px;
+  width: 15px;
+  background-color: white;
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.checkmark:after {
+  content: '';
+  position: absolute;
+  display: none;
+  width: 7px;
+  height: 7px;
+  background-color: black;
+}
+
+.input:checked + .label .checkmark:after {
+  display: block;
+}

@@ -4,6 +4,7 @@ import { Multiselect } from '../Form/Multiselect/Multiselect'
 import { CarouselSwitch } from '../Form/Carousel/CarouselSwitch'
 import { FormCard } from '../Form/FormCard/FormCard'
 import { FormField } from '../Form/FormField/FormField'
+import { CheckboxGroup } from '../Form/CheckboxGroup/CheckboxGroup'
 import { Checkbox } from '../Form/Checkbox/Checkbox'
 import { Radio } from '../Form/Radio/Radio'
 import { MultiPositionFormField } from '../Form/MultiPositionFormField/MultiPositionFormField'
@@ -75,12 +76,6 @@ export const PaniniForm = ({ isOpened, endFormFnc }: PaniniFormProps) => {
   const onSubmit = (data: FieldValues) =>
     console.log({
       ...data,
-      // base: {
-      //   ...data.base,
-      //   vegetableVariant: Object.keys(data.base.vegetableVariant).filter(
-      //     (key) => data.base.vegetableVariant[key]
-      //   ),
-      // },
     })
   const methods = useForm()
 
@@ -147,14 +142,11 @@ export const PaniniForm = ({ isOpened, endFormFnc }: PaniniFormProps) => {
             <FormField>
               <h3 className={styles.fieldName}>Spreads</h3>
               <div className={styles.spreadsContainer}>
-                {spreadVariant.map((spread) => (
-                  <Checkbox
-                    labelText={spread}
-                    name={`spreads.${spread}`}
-                    sectionName="extras"
-                    key={`spreads.${spread}`}
-                  />
-                ))}
+                <CheckboxGroup
+                  groupName="spreads"
+                  options={spreadVariant}
+                  sectionName="extras"
+                />
               </div>
             </FormField>
             <FormField>
@@ -168,14 +160,11 @@ export const PaniniForm = ({ isOpened, endFormFnc }: PaniniFormProps) => {
             <FormField>
               <h3 className={styles.fieldName}>Topping</h3>
               <div className={styles.toppingsContainer}>
-                {toppingVariant.map((topping) => (
-                  <Checkbox
-                    labelText={topping}
-                    name={`topping.${topping}`}
-                    key={`topping.${topping}`}
-                    sectionName="extras"
-                  />
-                ))}
+                <CheckboxGroup
+                  groupName={`topping`}
+                  options={toppingVariant}
+                  sectionName="extras"
+                />
               </div>
             </FormField>
           </FormCard>
