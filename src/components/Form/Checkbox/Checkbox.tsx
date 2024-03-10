@@ -18,11 +18,7 @@ export const Checkbox = ({
   ...rest
 }: CheckboxProps) => {
   const componentName = sectionName ? `${sectionName}.${name}` : name
-  const { register, setValue } = useFormContext()
-
-  useEffect(() => {
-    setValue(componentName, initalValue)
-  }, [])
+  const { register } = useFormContext()
 
   return (
     <div className={styles.container}>

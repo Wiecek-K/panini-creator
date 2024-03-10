@@ -1,4 +1,6 @@
 import { FieldValues, useForm, FormProvider } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import * as z from 'zod'
 
 import { Multiselect } from '../Form/Multiselect/Multiselect'
 import { CarouselSwitch } from '../Form/Carousel/CarouselSwitch'
@@ -65,20 +67,53 @@ export interface SandwichPayload {
     >
   }
   extras: {
-    egg: Array<'FRIED EGG' | 'OMELET' | 'SCRAMBLED EGG'>
+    egg: Array<'FRIED EGG' | 'OMELET' | 'SCRAMBLED EGG' | 'POACHED EGG'>
     spreads: Array<'BUTTER' | 'HUMMUS' | 'GUACAMOLE'>
     serving: 'COLD' | 'WARM' | 'GRILLED'
-    topping: 'SESAME' | null
+    topping: 'SESAME' | null | false
   }
 }
+
+const schema: z.ZodType<SandwichPayload> = z.object({
+  sandwichName: z.string().max(35),
+  napkins: z.boolean(),
+  cutlery: z.boolean(),
+  base: z.object({
+    bread: z.enum(['FULL GRAIN', 'WHEAT']),
+    cheese: z.array(z.enum(['MOZZARELLA', 'STRACIATELLA', 'EDAM', 'GOUDA'])),
+    dressing: z.array(z.enum(['OLIVE OIL', 'HONEY_MUSTARD', 'RANCH', 'MAYO'])),
+    meat: z.array(z.enum(['SALAMI', 'HAM', 'BACON', 'CHICKEN'])),
+    vegetables: z.array(
+      z.enum([
+        'SALAD',
+        'TOMATO',
+        'CUCUMBER',
+        'ONION',
+        'PICKLES',
+        'PEPPER',
+        'ASPARAGUS',
+        'BEETROOT',
+        'OBERGINE',
+      ])
+    ),
+  }),
+  extras: z.object({
+    egg: z.array(
+      z.enum(['FRIED EGG', 'OMELET', 'SCRAMBLED EGG', 'POACHED EGG'])
+    ),
+    spreads: z.array(z.enum(['BUTTER', 'HUMMUS', 'GUACAMOLE'])),
+    topping: z.union([z.enum(['SESAME']), z.null(), z.literal(false)]),
+    serving: z.enum(['COLD', 'WARM', 'GRILLED']),
+  }),
+})
 
 export const PaniniForm = ({ isOpened, endFormFnc }: PaniniFormProps) => {
   const onSubmit = (data: FieldValues) =>
     console.log({
       ...data,
     })
-  const methods = useForm()
-
+  const methods = useForm({ defaultValues: { sandwichName: 'test' } })
+  // { resolver: zodResolver(schema) }
   //   const methods = useForm<FormGenerator>()
 
   const { handleSubmit, register } = methods
@@ -160,16 +195,16 @@ export const PaniniForm = ({ isOpened, endFormFnc }: PaniniFormProps) => {
             <FormField>
               <h3 className={styles.fieldName}>Topping</h3>
               <div className={styles.toppingsContainer}>
-                <CheckboxGroup
-                  groupName={`topping`}
-                  options={toppingVariant}
+                <Checkbox
+                  labelText={toppingVariant[0]}
+                  name="toping"
                   sectionName="extras"
                 />
               </div>
             </FormField>
           </FormCard>
           <FormCard header="FINALIZE ORDER">
-            <FormField>
+            <FormField padding={'15px'}>
               <h3 className={styles.fieldName}>Name panini</h3>
               <input
                 className={styles.paniniNameInput}
