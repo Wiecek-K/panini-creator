@@ -27,29 +27,12 @@ import { dressingVariants } from '../../data/dressing'
 import { cheeseVariants } from '../../data/cheese'
 import { eggVariants } from '../../data/egg'
 import { toppingVariant } from '../../data/topping'
+import { useState } from 'react'
 interface PaniniFormProps {
   isOpened?: boolean
   endFormFnc: () => void
 }
-// export type StepOneData = {
-//   stepOne: {
-//     name: string
-//     imageSrc: string
 
-//     dough: string
-//     filling: string
-//     ingredients: string
-//   }
-// }
-
-// export type StepTwoData = {
-//   stepTwo: {
-//     notes: string
-//     recipe: Omit<DumplingRecipe, 'name' | 'imageSrc'> & { serving: string[] }
-//   }
-// }
-
-// export type FormGenerator = StepOneData & StepTwoData
 export interface SandwichPayload {
   sandwichName: string // Max. 35 characters
   cutlery: boolean
@@ -114,7 +97,6 @@ const schema: z.ZodType<SandwichPayload> = z.object({
   }),
 })
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const customErrorMap: z.ZodErrorMap = (issue /*ctx*/) => {
   if (issue.code === z.ZodIssueCode.invalid_type) {
     if (issue.expected === 'string') {
@@ -132,6 +114,16 @@ z.setErrorMap(customErrorMap)
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const PaniniForm = ({ isOpened, endFormFnc }: PaniniFormProps) => {
+  const [resetFlag, setResetFlag] = useState(false)
+
+  const methods = useForm<SandwichPayload>({
+    defaultValues: { sandwichName: 'test' },
+    resolver: zodResolver(schema),
+  })
+
+  const { handleSubmit, register, formState, reset } = methods
+  const { errors } = formState
+
   const onSubmit = (data: FieldValues) =>
     console.log({
       ...data,
@@ -139,14 +131,10 @@ export const PaniniForm = ({ isOpened, endFormFnc }: PaniniFormProps) => {
   const onError = (errors: FieldErrors<SandwichPayload>) => {
     console.log('Form Errors', errors)
   }
-
-  const methods = useForm<SandwichPayload>({
-    defaultValues: { sandwichName: 'test' },
-    resolver: zodResolver(schema),
-  })
-
-  const { handleSubmit, register, formState } = methods
-  const { errors } = formState
+  const handleReset = () => {
+    setResetFlag((prev) => !prev)
+    reset()
+  }
 
   return (
     <div className={`${styles.formContainer} ${isOpened ? styles.open : ''}`}>
@@ -160,6 +148,7 @@ export const PaniniForm = ({ isOpened, endFormFnc }: PaniniFormProps) => {
                 sectionName="base"
                 icons={true}
                 options={breadVariants}
+                reset={resetFlag}
               />
             </FormField>
             <MultiPositionFormField
@@ -169,12 +158,14 @@ export const PaniniForm = ({ isOpened, endFormFnc }: PaniniFormProps) => {
               selectorComponent={
                 <Select name="cheese" options={cheeseVariants} />
               }
+              reset={resetFlag}
             />
             <MultiPositionFormField
               name={'meat'}
               sectionName="base"
               selectorComponent={<Select name="meat" options={meatVariants} />}
               linesBetweenSelectors={false}
+              reset={resetFlag}
             />
             <MultiPositionFormField
               name={'dressing'}
@@ -183,6 +174,7 @@ export const PaniniForm = ({ isOpened, endFormFnc }: PaniniFormProps) => {
                 <CarouselSwitch name="dressing" options={dressingVariants} />
               }
               linesBetweenSelectors={true}
+              reset={resetFlag}
             />
 
             <FormField>
@@ -202,6 +194,7 @@ export const PaniniForm = ({ isOpened, endFormFnc }: PaniniFormProps) => {
               sectionName="extras"
               selectorComponent={<Select name="egg" options={eggVariants} />}
               linesBetweenSelectors={false}
+              reset={resetFlag}
             />
 
             <FormField>
@@ -270,7 +263,8 @@ export const PaniniForm = ({ isOpened, endFormFnc }: PaniniFormProps) => {
               PLACE ORDER
             </button>
             <button
-              type="reset"
+              type="button"
+              onClick={handleReset}
               className={styles.secondaryBtn + ' ' + styles.resetBtn}
             >
               START AGAIN
