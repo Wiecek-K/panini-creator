@@ -1,5 +1,5 @@
 import { useFormContext } from 'react-hook-form'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
@@ -17,6 +17,7 @@ export interface CarouselSwitchProps {
   icons?: boolean
   sectionName?: string
   initialIndex?: number
+  reset?: boolean
 }
 
 export const CarouselSwitch = ({
@@ -25,14 +26,19 @@ export const CarouselSwitch = ({
   options,
   initialIndex = 0,
   icons = false,
+  reset,
 }: CarouselSwitchProps) => {
   initialIndex = validateInitialIndex(initialIndex, options)
   const componentName = sectionName ? `${sectionName}.${name}` : name
 
   const { register, setValue } = useFormContext()
+
+  const sliderRef = useRef<Slider>(null)
+
   useEffect(() => {
     setValue(componentName, options[initialIndex])
-  }, [name, options, setValue, sectionName])
+    sliderRef.current?.slickGoTo(initialIndex)
+  }, [name, options, setValue, sectionName, reset])
 
   const settings = {
     arrows: true,
@@ -51,7 +57,7 @@ export const CarouselSwitch = ({
   return (
     <>
       <input type="hidden" {...register(componentName)} />
-      <Slider {...settings}>
+      <Slider ref={sliderRef} {...settings}>
         {options.map((value, index) => (
           <div key={index}>
             <div className={styles.sliderOption}>

@@ -32,25 +32,7 @@ interface PaniniFormProps {
   isOpened?: boolean
   endFormFnc: () => void
 }
-// export type StepOneData = {
-//   stepOne: {
-//     name: string
-//     imageSrc: string
 
-//     dough: string
-//     filling: string
-//     ingredients: string
-//   }
-// }
-
-// export type StepTwoData = {
-//   stepTwo: {
-//     notes: string
-//     recipe: Omit<DumplingRecipe, 'name' | 'imageSrc'> & { serving: string[] }
-//   }
-// }
-
-// export type FormGenerator = StepOneData & StepTwoData
 export interface SandwichPayload {
   sandwichName: string // Max. 35 characters
   cutlery: boolean
@@ -139,7 +121,7 @@ export const PaniniForm = ({ isOpened, endFormFnc }: PaniniFormProps) => {
     resolver: zodResolver(schema),
   })
 
-  const { handleSubmit, register, formState } = methods
+  const { handleSubmit, register, formState, reset } = methods
   const { errors } = formState
 
   const onSubmit = (data: FieldValues) =>
@@ -151,7 +133,7 @@ export const PaniniForm = ({ isOpened, endFormFnc }: PaniniFormProps) => {
   }
   const handleReset = () => {
     setResetFlag((prev) => !prev)
-    methods.reset()
+    reset()
   }
 
   return (
@@ -166,6 +148,7 @@ export const PaniniForm = ({ isOpened, endFormFnc }: PaniniFormProps) => {
                 sectionName="base"
                 icons={true}
                 options={breadVariants}
+                reset={resetFlag}
               />
             </FormField>
             <MultiPositionFormField

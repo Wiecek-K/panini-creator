@@ -36,7 +36,6 @@ export const MultiPositionFormField = ({
   useEffect(() => {
     setIsChecked(false)
     remove()
-    console.log('reset')
   }, [reset])
 
   const handleSwitchBtnChange = (isChecked: boolean) => {
