@@ -24,20 +24,25 @@ export const CarouselSwitch = ({
   name,
   sectionName = '',
   options,
-  initialIndex = 0,
+  initialIndex,
   icons = false,
   reset,
 }: CarouselSwitchProps) => {
-  initialIndex = validateInitialIndex(initialIndex, options)
+  initialIndex
+    ? (initialIndex = validateInitialIndex(initialIndex, options))
+    : null
+
   const componentName = sectionName ? `${sectionName}.${name}` : name
 
-  const { register, setValue } = useFormContext()
+  const { register, setValue, getValues } = useFormContext()
 
   const sliderRef = useRef<Slider>(null)
 
   useEffect(() => {
-    setValue(componentName, options[initialIndex])
-    sliderRef.current?.slickGoTo(initialIndex)
+    // setValue(componentName, options[initialIndex])
+    sliderRef.current?.slickGoTo(
+      options.findIndex((option) => option === getValues(componentName))
+    )
   }, [name, options, setValue, sectionName, reset])
 
   const settings = {

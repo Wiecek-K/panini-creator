@@ -1,4 +1,4 @@
-import { InputHTMLAttributes, useEffect } from 'react'
+import { InputHTMLAttributes } from 'react'
 import { useFormContext } from 'react-hook-form'
 
 import { capitalizeFirstLetter } from '../../../utils/capitalizeFirstLetter'
@@ -16,12 +16,8 @@ export const Multiselect = ({
   sectionName,
   ...rest
 }: MultiselectProps) => {
-  const { register, setValue } = useFormContext()
+  const { register } = useFormContext()
   const arrayName = sectionName ? `${sectionName}.${groupName}` : `${groupName}`
-
-  useEffect(() => {
-    setValue(arrayName, [])
-  }, [])
 
   return (
     <>
