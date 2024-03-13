@@ -224,10 +224,12 @@ export const PaniniForm = ({ isOpened, endFormFnc }: PaniniFormProps) => {
             <FormField>
               <h3 className={styles.fieldName}>Topping</h3>
               <div className={styles.toppingsContainer}>
-                <Checkbox
-                  labelText={toppingVariant[0]}
+                <Radio
                   name="topping"
                   sectionName="extras"
+                  options={toppingVariant}
+                  isDeselectable={true}
+                  shape="square"
                 />
               </div>
             </FormField>

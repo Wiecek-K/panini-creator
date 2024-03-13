@@ -3,12 +3,11 @@ import { useFormContext } from 'react-hook-form'
 
 import styles from './Radio.module.css'
 
-interface RadioProps
-  extends InputHTMLAttributes<HTMLInputElement>,
-    PropsWithChildren<object> {
+interface RadioProps extends PropsWithChildren<object> {
   name: string
   sectionName?: string
   options: string[]
+  shape?: 'square' | 'round'
   isDeselectable?: boolean
 }
 
@@ -18,12 +17,12 @@ export const Radio = ({
   options,
   children,
   isDeselectable = false,
-  ...rest
+  shape = 'round',
 }: RadioProps) => {
   const { register, watch, setValue } = useFormContext()
   const componentName = sectionName ? `${sectionName}.${name}` : name
 
-  const selectedOption = isDeselectable ? watch(componentName) : null
+  const selectedOption = watch(componentName)
   const handleOptionChange = (value: string) => {
     if (selectedOption === value) {
       setValue(componentName, null)
@@ -46,7 +45,6 @@ export const Radio = ({
                 value={option}
                 checked={selectedOption === option}
                 onClick={() => handleOptionChange(option)}
-                {...rest}
               />
             ) : (
               <input
@@ -59,7 +57,9 @@ export const Radio = ({
             )}
 
             <label className={styles.label} htmlFor={`${name}.${option}`}>
-              <span className={styles.checkmark}></span>
+              <span
+                className={`${styles.checkmark} ${styles[`${shape}Checkmark`]}`}
+              ></span>
               <span>{option}</span>
             </label>
           </div>
