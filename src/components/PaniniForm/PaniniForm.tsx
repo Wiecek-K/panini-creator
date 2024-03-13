@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import {
   FieldValues,
   useForm,
@@ -27,87 +28,14 @@ import { dressingVariants } from '../../data/dressing'
 import { cheeseVariants } from '../../data/cheese'
 import { eggVariants } from '../../data/egg'
 import { toppingVariant } from '../../data/topping'
-import { useState } from 'react'
+
+import { SandwichPayload } from '../../types/SandwichPayload'
+import { customErrorMap } from '../../utils/Zod/PaniniForm/customErrorMap'
+import { schema } from '../../utils/Zod/PaniniForm/schema'
+
 interface PaniniFormProps {
   isOpened?: boolean
   endFormFnc: () => void
-}
-
-export interface SandwichPayload {
-  sandwichName: string // Max. 35 characters
-  cutlery: boolean
-  napkins: boolean
-  base: {
-    bread: 'FULL GRAIN' | 'WHEAT'
-    cheese: Array<'MOZZARELLA' | 'STRACIATELLA' | 'EDAM' | 'GOUDA'>
-    meat: Array<'SALAMI' | 'HAM' | 'BACON' | 'CHICKEN'>
-    dressing: Array<'OLIVE OIL' | 'HONEY_MUSTARD' | 'RANCH' | 'MAYO'>
-    vegetables: Array<
-      | 'SALAD'
-      | 'TOMATO'
-      | 'OBERGINE'
-      | 'BEETROOT'
-      | 'PICKLES'
-      | 'ONION'
-      | 'PEPPER'
-      | 'ASPARAGUS'
-      | 'CUCUMBER'
-    >
-  }
-  extras: {
-    egg: Array<'FRIED EGG' | 'OMELET' | 'SCRAMBLED EGG' | 'POACHED EGG'>
-    spreads: Array<'BUTTER' | 'HUMMUS' | 'GUACAMOLE'>
-    serving: 'COLD' | 'WARM' | 'GRILLED'
-    topping: 'SESAME' | null | false
-  }
-}
-
-const schema: z.ZodType<SandwichPayload> = z.object({
-  sandwichName: z.string().max(35).min(1),
-  napkins: z.boolean(),
-  cutlery: z.boolean(),
-  base: z.object({
-    bread: z.enum(['FULL GRAIN', 'WHEAT']),
-    cheese: z.array(z.enum(['MOZZARELLA', 'STRACIATELLA', 'EDAM', 'GOUDA'])),
-    dressing: z.array(z.enum(['OLIVE OIL', 'HONEY_MUSTARD', 'RANCH', 'MAYO'])),
-    meat: z.array(z.enum(['SALAMI', 'HAM', 'BACON', 'CHICKEN'])),
-    vegetables: z.array(
-      z.enum([
-        'SALAD',
-        'TOMATO',
-        'CUCUMBER',
-        'ONION',
-        'PICKLES',
-        'PEPPER',
-        'ASPARAGUS',
-        'BEETROOT',
-        'OBERGINE',
-      ])
-    ),
-  }),
-  extras: z.object({
-    egg: z.array(
-      z.enum(['FRIED EGG', 'OMELET', 'SCRAMBLED EGG', 'POACHED EGG'])
-    ),
-    spreads: z.array(z.enum(['BUTTER', 'HUMMUS', 'GUACAMOLE'])),
-    topping: z.union([z.enum(['SESAME']), z.null(), z.literal(false)]),
-    serving: z.enum(['COLD', 'WARM', 'GRILLED'], {
-      required_error: 'You have to choose something',
-    }),
-  }),
-})
-
-const customErrorMap: z.ZodErrorMap = (issue /*ctx*/) => {
-  if (issue.code === z.ZodIssueCode.invalid_type) {
-    if (issue.expected === 'string') {
-      return { message: 'bad type!' }
-    }
-  }
-  if (issue.code === z.ZodIssueCode.custom) {
-    return { message: `less-than-${(issue.params || {}).minimum}` }
-  }
-  return { message: 'Something went wrong' }
-  // return { message: ctx.defaultError };
 }
 
 z.setErrorMap(customErrorMap)
@@ -116,8 +44,12 @@ export const PaniniForm = ({ isOpened, endFormFnc }: PaniniFormProps) => {
   const [resetFlag, setResetFlag] = useState(false)
 
   const methods = useForm<SandwichPayload>({
-    defaultValues: { sandwichName: 'test' },
-    // resolver: zodResolver(schema),
+    defaultValues: {
+      sandwichName: 'ZimnaSuchaGrahamka',
+      base: { bread: 'FULL GRAIN', vegetables: [] },
+      extras: { serving: 'COLD', spreads: [] },
+    },
+    resolver: zodResolver(schema),
   })
 
   const { handleSubmit, register, formState, reset } = methods
@@ -175,7 +107,6 @@ export const PaniniForm = ({ isOpened, endFormFnc }: PaniniFormProps) => {
               linesBetweenSelectors={true}
               reset={resetFlag}
             />
-
             <FormField>
               <h3 className={styles.fieldName}>Vegetables</h3>
               <div className={styles.multiselectContainer}>
@@ -187,6 +118,7 @@ export const PaniniForm = ({ isOpened, endFormFnc }: PaniniFormProps) => {
               </div>
             </FormField>
           </FormCard>
+
           <FormCard header="CONFIGURE EXTRAS">
             <MultiPositionFormField
               name={'egg'}
@@ -195,7 +127,6 @@ export const PaniniForm = ({ isOpened, endFormFnc }: PaniniFormProps) => {
               linesBetweenSelectors={false}
               reset={resetFlag}
             />
-
             <FormField>
               <h3 className={styles.fieldName}>Spreads</h3>
               <div className={styles.spreadsContainer}>
@@ -208,7 +139,6 @@ export const PaniniForm = ({ isOpened, endFormFnc }: PaniniFormProps) => {
             </FormField>
             <FormField>
               <h3 className={styles.fieldName}>Serving</h3>
-
               <Radio
                 name={'serving'}
                 sectionName="extras"
@@ -234,6 +164,7 @@ export const PaniniForm = ({ isOpened, endFormFnc }: PaniniFormProps) => {
               </div>
             </FormField>
           </FormCard>
+
           <FormCard header="FINALIZE ORDER">
             <FormField padding={'15px'}>
               <h3 className={styles.fieldName}>Name panini</h3>

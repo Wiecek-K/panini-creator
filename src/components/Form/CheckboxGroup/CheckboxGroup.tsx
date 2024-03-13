@@ -1,4 +1,4 @@
-import { InputHTMLAttributes, useEffect } from 'react'
+import { InputHTMLAttributes} from 'react'
 import { useFormContext } from 'react-hook-form'
 
 import styles from './CheckboxGroup.module.css'
@@ -16,11 +16,7 @@ export const CheckboxGroup = ({
   ...rest
 }: CheckboxGroupProps) => {
   const componentName = sectionName ? `${sectionName}.${groupName}` : groupName
-  const { register, setValue } = useFormContext()
-
-  useEffect(() => {
-    setValue(componentName, [])
-  }, [])
+  const { register } = useFormContext()
 
   return (
     <>
