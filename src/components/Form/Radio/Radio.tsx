@@ -9,6 +9,7 @@ interface RadioProps
   name: string
   sectionName?: string
   options: string[]
+  isDeselectable?: boolean
 }
 
 export const Radio = ({
@@ -16,23 +17,47 @@ export const Radio = ({
   sectionName = '',
   options,
   children,
+  isDeselectable = false,
   ...rest
 }: RadioProps) => {
-  const { register } = useFormContext()
+  const { register, watch, setValue } = useFormContext()
   const componentName = sectionName ? `${sectionName}.${name}` : name
+
+  const selectedOption = isDeselectable ? watch(componentName) : null
+  const handleOptionChange = (value: string) => {
+    if (selectedOption === value) {
+      setValue(componentName, null)
+    } else {
+      setValue(componentName, value)
+    }
+  }
+
   return (
     <div className={styles.container}>
       {options.map((option) => {
         return (
           <div key={`${name}.${option}`}>
-            <input
-              {...register(componentName)}
-              className={styles.input}
-              id={`${name}.${option}`}
-              type="radio"
-              value={option}
-              {...rest}
-            />
+            {isDeselectable ? (
+              <input
+                {...register(componentName)}
+                className={styles.input}
+                id={`${name}.${option}`}
+                type="radio"
+                value={option}
+                checked={selectedOption === option}
+                onClick={() => handleOptionChange(option)}
+                {...rest}
+              />
+            ) : (
+              <input
+                {...register(componentName)}
+                className={styles.input}
+                id={`${name}.${option}`}
+                type="radio"
+                value={option}
+              />
+            )}
+
             <label className={styles.label} htmlFor={`${name}.${option}`}>
               <span className={styles.checkmark}></span>
               <span>{option}</span>

@@ -112,13 +112,12 @@ const customErrorMap: z.ZodErrorMap = (issue /*ctx*/) => {
 
 z.setErrorMap(customErrorMap)
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const PaniniForm = ({ isOpened, endFormFnc }: PaniniFormProps) => {
   const [resetFlag, setResetFlag] = useState(false)
 
   const methods = useForm<SandwichPayload>({
     defaultValues: { sandwichName: 'test' },
-    resolver: zodResolver(schema),
+    // resolver: zodResolver(schema),
   })
 
   const { handleSubmit, register, formState, reset } = methods
