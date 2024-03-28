@@ -29,6 +29,7 @@ import { cheeseVariants } from '../../data/cheese'
 import { eggVariants } from '../../data/egg'
 import { toppingVariant } from '../../data/topping'
 
+import { sendPayload } from '../../API'
 import { SandwichPayload } from '../../types/SandwichPayload'
 import { customErrorMap } from '../../utils/Zod/PaniniForm/customErrorMap'
 import { schema } from '../../utils/Zod/PaniniForm/schema'
@@ -55,13 +56,15 @@ export const PaniniForm = ({ isOpened, endFormFnc }: PaniniFormProps) => {
   const { handleSubmit, register, formState, reset } = methods
   const { errors } = formState
 
-  const onSubmit = (data: FieldValues) =>
-    console.log({
-      ...data,
-    })
+  const onSubmit = (data: SandwichPayload) => {
+    sendPayload(data)
+    console.log('submit', data)
+  }
+
   const onError = (errors: FieldErrors<SandwichPayload>) => {
     console.log('Form Errors', errors)
   }
+
   const handleReset = () => {
     setResetFlag((prev) => !prev)
     reset()
