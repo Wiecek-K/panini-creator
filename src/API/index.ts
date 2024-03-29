@@ -11,16 +11,23 @@ const paniniAPI: AxiosInstance = axios.create({
   },
   timeout: 60000,
 })
-export async function sendPayload(sandwichPayload: SandwichPayload) {
+export async function downloadSandwichImage(sandwichPayload: SandwichPayload) {
   try {
     const response = await paniniAPI.post('', {
       ...sandwichPayload,
     })
 
-    console.log(response.data)
+    const imageUrl = response.data.imageUrl
 
-    return response.data
-    // as ImageResponse
+    const saveImg = document.createElement('a')
+    saveImg.href = imageUrl
+    saveImg.download = sandwichPayload.sandwichName + '.png'
+    saveImg.target = '_blank'
+
+    document.body.appendChild(saveImg)
+    saveImg.click()
+
+    document.body.removeChild(saveImg)
   } catch (error) {
     console.log('error', error)
   }

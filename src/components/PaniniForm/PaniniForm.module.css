@@ -20,6 +20,12 @@
 .primaryBtn:hover {
   text-decoration: underline;
 }
+.primaryBtn:disabled {
+  opacity: 0.75;
+}
+.primaryBtn:disabled:hover {
+  text-decoration: none;
+}
 
 .secondaryBtn {
   padding: 14px 20px;
@@ -29,6 +35,7 @@
 .secondaryBtn:hover {
   border: 0.5px solid black;
 }
+
 .multiselectContainer {
   display: flex;
   flex-wrap: wrap;

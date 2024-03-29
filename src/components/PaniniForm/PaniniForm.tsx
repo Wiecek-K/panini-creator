@@ -29,7 +29,7 @@ import { cheeseVariants } from '../../data/cheese'
 import { eggVariants } from '../../data/egg'
 import { toppingVariant } from '../../data/topping'
 
-import { sendPayload } from '../../API'
+import { downloadSandwichImage } from '../../API'
 import { SandwichPayload } from '../../types/SandwichPayload'
 import { customErrorMap } from '../../utils/Zod/PaniniForm/customErrorMap'
 import { schema } from '../../utils/Zod/PaniniForm/schema'
@@ -42,6 +42,7 @@ interface PaniniFormProps {
 z.setErrorMap(customErrorMap)
 
 export const PaniniForm = ({ isOpened, endFormFnc }: PaniniFormProps) => {
+  const [isLoading, setIsLoading] = useState(false)
   const [resetFlag, setResetFlag] = useState(false)
 
   const methods = useForm<SandwichPayload>({
@@ -56,9 +57,12 @@ export const PaniniForm = ({ isOpened, endFormFnc }: PaniniFormProps) => {
   const { handleSubmit, register, formState, reset } = methods
   const { errors } = formState
 
-  const onSubmit = (data: SandwichPayload) => {
-    sendPayload(data)
-    console.log('submit', data)
+  const onSubmit = async (data: SandwichPayload) => {
+    setIsLoading(true)
+    await downloadSandwichImage(data)
+    endFormFnc()
+    handleReset()
+    setIsLoading(false)
   }
 
   const onError = (errors: FieldErrors<SandwichPayload>) => {
@@ -192,7 +196,7 @@ export const PaniniForm = ({ isOpened, endFormFnc }: PaniniFormProps) => {
             </FormField>
             <button
               type="submit"
-              // onClick={endFormFnc}
+              disabled={isLoading}
               className={styles.primaryBtn + ' ' + styles.submitBtn}
             >
               PLACE ORDER
