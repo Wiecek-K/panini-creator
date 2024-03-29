@@ -11,7 +11,7 @@ function App() {
   const handleStartEndButtonsReplace = () => {
     setIsAppBegan((prev) => !prev)
   }
-  const handleEndForm = () => {
+  const showSuccessScreen = () => {
     handleStartEndButtonsReplace()
     setIsFormEnd(true)
   }
@@ -24,7 +24,7 @@ function App() {
         btnFnc={handleStartEndButtonsReplace}
         isClosing={isAppBegan}
       />
-      <PaniniForm isOpened={isAppBegan} endFormFnc={handleEndForm} />
+      <PaniniForm isOpened={isAppBegan} endFormFnc={showSuccessScreen} />
     </StrictMode>
   )
 }

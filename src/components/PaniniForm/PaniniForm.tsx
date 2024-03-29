@@ -36,12 +36,15 @@ import { schema } from '../../utils/Zod/PaniniForm/schema'
 
 interface PaniniFormProps {
   isOpened?: boolean
-  endFormFnc: () => void
+  showSuccessScreen: () => void
 }
 
 z.setErrorMap(customErrorMap)
 
-export const PaniniForm = ({ isOpened, endFormFnc }: PaniniFormProps) => {
+export const PaniniForm = ({
+  isOpened,
+  showSuccessScreen,
+}: PaniniFormProps) => {
   const [isLoading, setIsLoading] = useState(false)
   const [resetFlag, setResetFlag] = useState(false)
 
@@ -60,7 +63,7 @@ export const PaniniForm = ({ isOpened, endFormFnc }: PaniniFormProps) => {
   const onSubmit = async (data: SandwichPayload) => {
     setIsLoading(true)
     await downloadSandwichImage(data)
-    endFormFnc()
+    showSuccessScreen()
     handleReset()
     setIsLoading(false)
   }
