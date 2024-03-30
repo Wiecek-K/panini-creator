@@ -1,10 +1,5 @@
 import { useState } from 'react'
-import {
-  FieldValues,
-  useForm,
-  FormProvider,
-  FieldErrors,
-} from 'react-hook-form'
+import { useForm, FormProvider, FieldErrors } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 
@@ -45,7 +40,6 @@ export const PaniniForm = ({
   isOpened,
   showSuccessScreen,
 }: PaniniFormProps) => {
-  const [isLoading, setIsLoading] = useState(false)
   const [resetFlag, setResetFlag] = useState(false)
 
   const methods = useForm<SandwichPayload>({
@@ -58,14 +52,12 @@ export const PaniniForm = ({
   })
 
   const { handleSubmit, register, formState, reset } = methods
-  const { errors } = formState
+  const { errors, isSubmitting } = formState
 
   const onSubmit = async (data: SandwichPayload) => {
-    setIsLoading(true)
     await downloadSandwichImage(data)
     showSuccessScreen()
     handleReset()
-    setIsLoading(false)
   }
 
   const onError = (errors: FieldErrors<SandwichPayload>) => {
@@ -199,7 +191,7 @@ export const PaniniForm = ({
             </FormField>
             <button
               type="submit"
-              disabled={isLoading}
+              disabled={isSubmitting}
               className={styles.primaryBtn + ' ' + styles.submitBtn}
             >
               PLACE ORDER
@@ -213,6 +205,7 @@ export const PaniniForm = ({
             </button>
           </FormCard>
         </form>
+        {isSubmitting && <div className={styles.curtain}></div>}
       </FormProvider>
     </div>
   )

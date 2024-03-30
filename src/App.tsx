@@ -24,7 +24,7 @@ function App() {
         btnFnc={handleStartEndButtonsReplace}
         isClosing={isAppBegan}
       />
-      <PaniniForm isOpened={isAppBegan} endFormFnc={showSuccessScreen} />
+      <PaniniForm isOpened={isAppBegan} showSuccessScreen={showSuccessScreen} />
     </StrictMode>
   )
 }

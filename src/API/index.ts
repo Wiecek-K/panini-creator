@@ -29,6 +29,6 @@ export async function downloadSandwichImage(sandwichPayload: SandwichPayload) {
 
     document.body.removeChild(saveImg)
   } catch (error) {
-    console.log('error', error)
+    alert('Failed to place order. Please try again.');
   }
 }
