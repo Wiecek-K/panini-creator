@@ -1,13 +1,13 @@
 import axios, { AxiosInstance } from 'axios'
 import type { SandwichPayload } from '../types/SandwichPayload'
 
-const PANINI_API_KEY = 'secret_token'
+const apiKey = import.meta.env.VITE_API_KEY
 
 const paniniAPI: AxiosInstance = axios.create({
   baseURL: 'https://training.nerdbord.io/api/v1/panini-creator/order',
   headers: {
     'Content-Type': 'application/json',
-    Authorization: PANINI_API_KEY,
+    Authorization: apiKey,
   },
   timeout: 60000,
 })
@@ -29,6 +29,6 @@ export async function downloadSandwichImage(sandwichPayload: SandwichPayload) {
 
     document.body.removeChild(saveImg)
   } catch (error) {
-    alert('Failed to place order. Please try again.');
+    alert('Failed to place order. Please try again.')
   }
 }
