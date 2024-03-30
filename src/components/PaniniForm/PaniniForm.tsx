@@ -1,10 +1,5 @@
 import { useState } from 'react'
-import {
-  FieldValues,
-  useForm,
-  FormProvider,
-  FieldErrors,
-} from 'react-hook-form'
+import { useForm, FormProvider, FieldErrors } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 
@@ -29,18 +24,22 @@ import { cheeseVariants } from '../../data/cheese'
 import { eggVariants } from '../../data/egg'
 import { toppingVariant } from '../../data/topping'
 
+import { downloadSandwichImage } from '../../API'
 import { SandwichPayload } from '../../types/SandwichPayload'
 import { customErrorMap } from '../../utils/Zod/PaniniForm/customErrorMap'
 import { schema } from '../../utils/Zod/PaniniForm/schema'
 
 interface PaniniFormProps {
   isOpened?: boolean
-  endFormFnc: () => void
+  showSuccessScreen: () => void
 }
 
 z.setErrorMap(customErrorMap)
 
-export const PaniniForm = ({ isOpened, endFormFnc }: PaniniFormProps) => {
+export const PaniniForm = ({
+  isOpened,
+  showSuccessScreen,
+}: PaniniFormProps) => {
   const [resetFlag, setResetFlag] = useState(false)
 
   const methods = useForm<SandwichPayload>({
@@ -53,15 +52,18 @@ export const PaniniForm = ({ isOpened, endFormFnc }: PaniniFormProps) => {
   })
 
   const { handleSubmit, register, formState, reset } = methods
-  const { errors } = formState
+  const { errors, isSubmitting } = formState
 
-  const onSubmit = (data: FieldValues) =>
-    console.log({
-      ...data,
-    })
+  const onSubmit = async (data: SandwichPayload) => {
+    await downloadSandwichImage(data)
+    showSuccessScreen()
+    handleReset()
+  }
+
   const onError = (errors: FieldErrors<SandwichPayload>) => {
     console.log('Form Errors', errors)
   }
+
   const handleReset = () => {
     setResetFlag((prev) => !prev)
     reset()
@@ -189,7 +191,7 @@ export const PaniniForm = ({ isOpened, endFormFnc }: PaniniFormProps) => {
             </FormField>
             <button
               type="submit"
-              // onClick={endFormFnc}
+              disabled={isSubmitting}
               className={styles.primaryBtn + ' ' + styles.submitBtn}
             >
               PLACE ORDER
@@ -203,6 +205,7 @@ export const PaniniForm = ({ isOpened, endFormFnc }: PaniniFormProps) => {
             </button>
           </FormCard>
         </form>
+        {isSubmitting && <div className={styles.curtain}></div>}
       </FormProvider>
     </div>
   )

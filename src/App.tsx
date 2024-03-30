@@ -8,11 +8,11 @@ function App() {
   const [isAppBegan, setIsAppBegan] = useState(false)
   const [isFormEnd, setIsFormEnd] = useState(false)
 
-  const handleStartEndButtons = () => {
+  const handleStartEndButtonsReplace = () => {
     setIsAppBegan((prev) => !prev)
   }
-  const handleEndForm = () => {
-    handleStartEndButtons()
+  const showSuccessScreen = () => {
+    handleStartEndButtonsReplace()
     setIsFormEnd(true)
   }
 
@@ -21,10 +21,10 @@ function App() {
       <SplashScreen
         header={isFormEnd ? 'Panini ordered' : 'Panini Creator'}
         btnText={isFormEnd ? 'START AGAIN' : 'BEGIN'}
-        btnFnc={handleStartEndButtons}
+        btnFnc={handleStartEndButtonsReplace}
         isClosing={isAppBegan}
       />
-      <PaniniForm isOpened={isAppBegan} endFormFnc={handleEndForm} />
+      <PaniniForm isOpened={isAppBegan} showSuccessScreen={showSuccessScreen} />
     </StrictMode>
   )
 }
