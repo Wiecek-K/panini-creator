@@ -39,7 +39,6 @@ export const CarouselSwitch = ({
   const sliderRef = useRef<Slider>(null)
 
   useEffect(() => {
-    // setValue(componentName, options[initialIndex])
     sliderRef.current?.slickGoTo(
       options.findIndex((option) => option === getValues(componentName))
     )

@@ -11,6 +11,7 @@ function App() {
   const handleStartEndButtonsReplace = () => {
     setIsAppBegan((prev) => !prev)
   }
+
   const showSuccessScreen = () => {
     handleStartEndButtonsReplace()
     setIsFormEnd(true)

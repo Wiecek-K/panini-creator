@@ -1,11 +1,10 @@
-import { SelectHTMLAttributes, useEffect } from 'react'
+import { SelectHTMLAttributes } from 'react'
 import { useFormContext, Controller } from 'react-hook-form'
 import ReactSelect, {
   StylesConfig,
   components,
   DropdownIndicatorProps,
 } from 'react-select'
-import { capitalizeFirstLetter } from '../../../utils/capitalizeFirstLetter'
 
 interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
   name: string
@@ -20,10 +19,7 @@ export const Select = ({ name, sectionName = '', options }: SelectProps) => {
   }))
   const componentName = sectionName ? `${sectionName}.${name}` : name
 
-  const { control, setValue } = useFormContext()
-  useEffect(() => {
-    setValue(componentName, optionsObjectsArray[0].value)
-  }, [])
+  const { control } = useFormContext()
 
   const selectStyles: StylesConfig = {
     container: (styles) => {
@@ -111,7 +107,6 @@ export const Select = ({ name, sectionName = '', options }: SelectProps) => {
     <Controller
       name={componentName}
       control={control}
-      defaultValue={optionsObjectsArray[0]}
       render={({ field: { onChange, value, name } }) => (
         <ReactSelect
           components={{ DropdownIndicator }}

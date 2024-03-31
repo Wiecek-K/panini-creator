@@ -77,7 +77,7 @@ export const PaniniForm = ({
   }
 
   const handleReset = () => {
-    // setResetFlag((prev) => !prev)
+    setResetFlag((prev) => !prev)
     reset(defaultValues)
   }
 
@@ -94,6 +94,7 @@ export const PaniniForm = ({
     })
     console.log(newPanini)
     reset(newPanini)
+    setResetFlag((prev) => !prev)
   }
 
   return (
