@@ -28,6 +28,7 @@ import { downloadSandwichImage } from '../../API'
 import { SandwichPayload } from '../../types/SandwichPayload'
 import { customErrorMap } from '../../utils/Zod/PaniniForm/customErrorMap'
 import { schema } from '../../utils/Zod/PaniniForm/schema'
+import { createRandomPanini } from '../../utils/createRandomPanini'
 
 interface PaniniFormProps {
   isOpened?: boolean
@@ -42,20 +43,31 @@ export const PaniniForm = ({
 }: PaniniFormProps) => {
   const [resetFlag, setResetFlag] = useState(false)
 
-  const methods = useForm<SandwichPayload>({
-    defaultValues: {
-      sandwichName: 'ZimnaSuchaGrahamka',
-      base: { bread: 'FULL GRAIN', vegetables: [] },
-      extras: { serving: 'COLD', spreads: [] },
+  const defaultValues: SandwichPayload = {
+    sandwichName: 'ZimnaSuchaGrahamka',
+    base: {
+      bread: 'FULL GRAIN',
+      vegetables: [],
+      cheese: [],
+      dressing: [],
+      meat: [],
     },
+    extras: { serving: 'COLD', spreads: [], egg: [], topping: null },
+    cutlery: false,
+    napkins: false,
+  }
+  const methods = useForm<SandwichPayload>({
+    defaultValues,
     resolver: zodResolver(schema),
   })
 
-  const { handleSubmit, register, formState, reset } = methods
+  const { handleSubmit, register, formState, reset, setValue } = methods
   const { errors, isSubmitting } = formState
 
   const onSubmit = async (data: SandwichPayload) => {
-    await downloadSandwichImage(data)
+    // await downloadSandwichImage(data)
+    console.log(data)
+
     showSuccessScreen()
     handleReset()
   }
@@ -65,12 +77,29 @@ export const PaniniForm = ({
   }
 
   const handleReset = () => {
-    setResetFlag((prev) => !prev)
-    reset()
+    // setResetFlag((prev) => !prev)
+    reset(defaultValues)
+  }
+
+  const handleRandomizePanini = () => {
+    const newPanini = createRandomPanini({
+      breadVariants,
+      cheeseVariants,
+      dressingVariants,
+      eggVariants,
+      meatVariants,
+      servingVariant,
+      spreadVariant,
+      vegetableVariant,
+    })
+    console.log(newPanini)
+    reset(newPanini)
   }
 
   return (
     <div className={`${styles.formContainer} ${isOpened ? styles.open : ''}`}>
+      <h2>Panini Creator</h2>
+      <button onClick={handleRandomizePanini}>RANDOMIZE PANINI</button>
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(onSubmit, onError)}>
           <FormCard header="CONFIGURE BASE">
