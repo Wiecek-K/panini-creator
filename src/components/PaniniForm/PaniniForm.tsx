@@ -61,11 +61,11 @@ export const PaniniForm = ({
     resolver: zodResolver(schema),
   })
 
-  const { handleSubmit, register, formState, reset, setValue } = methods
+  const { handleSubmit, register, formState, reset } = methods
   const { errors, isSubmitting } = formState
 
   const onSubmit = async (data: SandwichPayload) => {
-    // await downloadSandwichImage(data)
+    await downloadSandwichImage(data)
     console.log(data)
 
     showSuccessScreen()
