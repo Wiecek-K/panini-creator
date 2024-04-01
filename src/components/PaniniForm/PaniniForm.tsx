@@ -99,8 +99,14 @@ export const PaniniForm = ({
 
   return (
     <div className={`${styles.formContainer} ${isOpened ? styles.open : ''}`}>
-      <h2>Panini Creator</h2>
-      <button onClick={handleRandomizePanini}>RANDOMIZE PANINI</button>
+      <div className={styles.headerContainer}>
+        <h2 className={styles.formHeader}>Panini Creator</h2>
+        <button className={styles.randomizeBtn} onClick={handleRandomizePanini}>
+          <img src={`/icons/Dices.svg`} />
+          RANDOMIZE PANINI
+        </button>
+      </div>
+
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(onSubmit, onError)}>
           <FormCard header="CONFIGURE BASE">
