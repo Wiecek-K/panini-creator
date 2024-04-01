@@ -1,1 +1,13 @@
-export const vegetableVariant = ["SALAD", "TOMATO", "CUCUMBER", "ONION", "PICKLES", "PEPPER", "ASPARAGUS", "BEETROOT", "OBERGINE"]
+import type { VegetableVariant } from '../types/SandwichPayload'
+
+export const vegetableVariant: VegetableVariant = [
+  'SALAD',
+  'TOMATO',
+  'CUCUMBER',
+  'ONION',
+  'PICKLES',
+  'PEPPER',
+  'ASPARAGUS',
+  'BEETROOT',
+  'OBERGINE',
+]

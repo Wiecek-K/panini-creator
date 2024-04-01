@@ -28,6 +28,7 @@ import { downloadSandwichImage } from '../../API'
 import { SandwichPayload } from '../../types/SandwichPayload'
 import { customErrorMap } from '../../utils/Zod/PaniniForm/customErrorMap'
 import { schema } from '../../utils/Zod/PaniniForm/schema'
+import { createRandomPanini } from '../../utils/createRandomPanini'
 
 interface PaniniFormProps {
   isOpened?: boolean
@@ -42,12 +43,21 @@ export const PaniniForm = ({
 }: PaniniFormProps) => {
   const [resetFlag, setResetFlag] = useState(false)
 
-  const methods = useForm<SandwichPayload>({
-    defaultValues: {
-      sandwichName: 'ZimnaSuchaGrahamka',
-      base: { bread: 'FULL GRAIN', vegetables: [] },
-      extras: { serving: 'COLD', spreads: [] },
+  const defaultValues: SandwichPayload = {
+    sandwichName: 'ZimnaSuchaGrahamka',
+    base: {
+      bread: 'FULL GRAIN',
+      vegetables: [],
+      cheese: [],
+      dressing: [],
+      meat: [],
     },
+    extras: { serving: 'COLD', spreads: [], egg: [], topping: null },
+    cutlery: false,
+    napkins: false,
+  }
+  const methods = useForm<SandwichPayload>({
+    defaultValues,
     resolver: zodResolver(schema),
   })
 
@@ -56,6 +66,8 @@ export const PaniniForm = ({
 
   const onSubmit = async (data: SandwichPayload) => {
     await downloadSandwichImage(data)
+    console.log(data)
+
     showSuccessScreen()
     handleReset()
   }
@@ -66,11 +78,35 @@ export const PaniniForm = ({
 
   const handleReset = () => {
     setResetFlag((prev) => !prev)
-    reset()
+    reset(defaultValues)
+  }
+
+  const handleRandomizePanini = () => {
+    const newPanini = createRandomPanini({
+      breadVariants,
+      cheeseVariants,
+      dressingVariants,
+      eggVariants,
+      meatVariants,
+      servingVariant,
+      spreadVariant,
+      vegetableVariant,
+    })
+    console.log(newPanini)
+    reset(newPanini)
+    setResetFlag((prev) => !prev)
   }
 
   return (
     <div className={`${styles.formContainer} ${isOpened ? styles.open : ''}`}>
+      <div className={styles.headerContainer}>
+        <h2 className={styles.formHeader}>Panini Creator</h2>
+        <button className={styles.randomizeBtn} onClick={handleRandomizePanini}>
+          <img src={`/icons/Dices.svg`} />
+          RANDOMIZE PANINI
+        </button>
+      </div>
+
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(onSubmit, onError)}>
           <FormCard header="CONFIGURE BASE">
