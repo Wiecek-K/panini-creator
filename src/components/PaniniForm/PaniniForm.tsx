@@ -58,15 +58,19 @@ export const PaniniForm = ({
   }
   const methods = useForm<SandwichPayload>({
     defaultValues,
-    resolver: zodResolver(schema),
+    resolver:
+      import.meta.env.VITE_USE_RESOLVER === 'false'
+        ? undefined
+        : zodResolver(schema),
   })
 
   const { handleSubmit, register, formState, reset } = methods
   const { errors, isSubmitting } = formState
 
   const onSubmit = async (data: SandwichPayload) => {
-    await downloadSandwichImage(data)
-    console.log(data)
+    import.meta.env.VITE_API_CONNECTION === 'false'
+      ? console.log(data)
+      : await downloadSandwichImage(data)
 
     showSuccessScreen()
     handleReset()
