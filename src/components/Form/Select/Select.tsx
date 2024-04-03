@@ -1,4 +1,4 @@
-import { SelectHTMLAttributes } from 'react'
+import { SelectHTMLAttributes, useEffect } from 'react'
 import { useFormContext, Controller } from 'react-hook-form'
 import ReactSelect, {
   StylesConfig,
@@ -19,7 +19,15 @@ export const Select = ({ name, sectionName = '', options }: SelectProps) => {
   }))
   const componentName = sectionName ? `${sectionName}.${name}` : name
 
-  const { control } = useFormContext()
+  const { control, setValue, getValues } = useFormContext()
+
+  useEffect(() => {
+    const fieldValue = getValues(componentName)
+
+    options.find((option) => option === fieldValue)
+      ? null
+      : setValue(componentName, optionsObjectsArray[0].value)
+  })
 
   const selectStyles: StylesConfig = {
     container: (styles) => {
