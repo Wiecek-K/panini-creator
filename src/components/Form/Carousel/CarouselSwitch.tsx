@@ -39,10 +39,15 @@ export const CarouselSwitch = ({
   const sliderRef = useRef<Slider>(null)
 
   useEffect(() => {
+    const fieldValue = getValues(componentName)
+    options.find((option) => option === fieldValue)
+      ? null
+      : setValue(componentName, options[0])
+
     sliderRef.current?.slickGoTo(
       options.findIndex((option) => option === getValues(componentName))
     )
-  }, [name, options, setValue, sectionName, reset])
+  }, [reset, sectionName, name, options])
 
   const settings = {
     arrows: true,
