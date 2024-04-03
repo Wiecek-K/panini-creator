@@ -3,16 +3,14 @@ import { render, screen } from '@testing-library/react'
 import { expect, describe, it } from 'vitest'
 import App from '../src/App'
 
-describe('test', () => {
+describe('base', () => {
   it('demo', () => {
     expect(true).toBe(true)
   })
-})
 
-describe('App', () => {
-  it('renders headline', () => {
+  it('renders Begin Btn', () => {
     render(<App />)
-    const headline = screen.getByText(/BEGIN/i)
-    expect(headline).toBeInTheDocument()
+    const beginBtn = screen.getByText(/BEGIN/i)
+    expect(beginBtn).toBeInTheDocument()
   })
 })
