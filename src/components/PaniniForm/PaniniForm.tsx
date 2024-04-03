@@ -72,7 +72,9 @@ export const PaniniForm = ({
       ? console.log(data)
       : await downloadSandwichImage(data)
 
-    showSuccessScreen()
+    import.meta.env.VITE_SHOW_SUCCES_SCREEN === 'false'
+      ? null
+      : showSuccessScreen()
     handleReset()
   }
 
