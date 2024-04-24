@@ -1,4 +1,4 @@
-import { InputHTMLAttributes, PropsWithChildren } from 'react'
+import { PropsWithChildren } from 'react'
 import { useFormContext } from 'react-hook-form'
 
 import styles from './Radio.module.css'
